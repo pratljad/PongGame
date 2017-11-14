@@ -1,0 +1,5 @@
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Arduino\bin\Debug\Arduino.dll
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Arduino\bin\Debug\Arduino.pdb
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Arduino\obj\Debug\Arduino.csprojResolveAssemblyReference.cache
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Arduino\obj\Debug\Arduino.dll
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Arduino\obj\Debug\Arduino.pdb
