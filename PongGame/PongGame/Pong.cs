@@ -33,30 +33,24 @@ namespace PongGame
 
                 // Standard setzen
                 valuePlayerOne = 500;
-                valuePlayerTwo = 500;
 
                 if (value != null)
                 {
                     string[] values = value.Split(':');
 
-                    if (values[0] == "JoyStick1_Y_axis")
+                    if (int.Parse(values[1]) < valuePlayerOne -20 || int.Parse(values[1]) > valuePlayerOne + 20)
                     {
-                        valuePlayerOne = int.Parse(values[1]);
+                        if (values[0] == "JoyStick1_Y_axis")
+                        {
+                            valuePlayerOne = int.Parse(values[1]);
+                        }
+                    }
+                    else
+                    {
+                        valuePlayerOne = 500;
                     }
 
-                    if (valuePlayerOne < 475)
-                    {
-                        mw.Playground_Slider1.Dispatcher.InvokeAsync(
-                            new Action(() =>
-                            {
-                                if (Canvas.GetTop(mw.Slider_Player1) > 0)
-                                {
-                                    Canvas.SetTop(mw.Slider_Player1, Canvas.GetTop(mw.Slider_Player1) - 5);
-                                }
-                            })
-                        );
-                    }
-                    else if (valuePlayerOne > 535)
+                    if (valuePlayerOne < 400)
                     {
                         mw.Playground_Slider1.Dispatcher.InvokeAsync(
                             new Action(() =>
@@ -64,6 +58,18 @@ namespace PongGame
                                 if (Canvas.GetTop(mw.Slider_Player1) < mw.Playground_Slider1.Height - mw.Slider_Player1.Height)
                                 {
                                     Canvas.SetTop(mw.Slider_Player1, Canvas.GetTop(mw.Slider_Player1) + 5);
+                                }
+                            })
+                        );
+                    }
+                    else if (valuePlayerOne > 600)
+                    {
+                        mw.Playground_Slider1.Dispatcher.InvokeAsync(
+                            new Action(() =>
+                            {
+                                if (Canvas.GetTop(mw.Slider_Player1) > 0)
+                                {
+                                    Canvas.SetTop(mw.Slider_Player1, Canvas.GetTop(mw.Slider_Player1) - 5);
                                 }
                             })
                         );
@@ -82,31 +88,25 @@ namespace PongGame
                 value = mw.getArduinoController().returnValue();
 
                 // Standard setzen
-                valuePlayerOne = 500;
                 valuePlayerTwo = 500;
 
                 if (value != null)
                 {
                     string[] values = value.Split(':');
 
-                    if (values[0] == "JoyStick2_Y_axis")
+                    if (int.Parse(values[1]) < valuePlayerTwo -20 || int.Parse(values[1]) > valuePlayerTwo + 20)
                     {
-                        valuePlayerTwo = int.Parse(values[1]);
+                        if (values[0] == "JoyStick2_Y_axis")
+                        {
+                            valuePlayerTwo = int.Parse(values[1]);
+                        }
+                    }
+                    else
+                    {
+                        valuePlayerTwo = 500;
                     }
 
-                    if (valuePlayerTwo < 475)
-                    {
-                        mw.Playground_Slider2.Dispatcher.InvokeAsync(
-                            new Action(() =>
-                            {
-                                if (Canvas.GetTop(mw.Slider_Player2) > 0)
-                                {
-                                    Canvas.SetTop(mw.Slider_Player2, Canvas.GetTop(mw.Slider_Player2) - 5);
-                                }
-                            })
-                        );
-                    }
-                    else if (valuePlayerTwo > 535)
+                    if (valuePlayerTwo < 400)
                     {
                         mw.Playground_Slider2.Dispatcher.InvokeAsync(
                             new Action(() =>
@@ -114,6 +114,18 @@ namespace PongGame
                                 if (Canvas.GetTop(mw.Slider_Player2) < mw.Playground_Slider2.Height - mw.Slider_Player2.Height)
                                 {
                                     Canvas.SetTop(mw.Slider_Player2, Canvas.GetTop(mw.Slider_Player2) + 5);
+                                }
+                            })
+                        );
+                    }
+                    else if (valuePlayerTwo > 600)
+                    {
+                        mw.Playground_Slider2.Dispatcher.InvokeAsync(
+                            new Action(() =>
+                            {
+                                if (Canvas.GetTop(mw.Slider_Player2) > 0)
+                                {
+                                    Canvas.SetTop(mw.Slider_Player2, Canvas.GetTop(mw.Slider_Player2) - 5);
                                 }
                             })
                         );
@@ -121,89 +133,5 @@ namespace PongGame
                 }
             }
         }
-
-        /*
-        public void runPongGame(int player)
-        {
-            while (mw.getIsPlaying())
-            {
-                Thread.Sleep(100);
-
-                value = mw.getArduinoController().returnValue();
-
-                // Standard setzen
-                valuePlayerOne = 500;
-                valuePlayerTwo = 500;
-
-                if (value != null)
-                {
-                    string[] values = value.Split(':');
-
-                    if (values[0] == "JoyStick1_Y_axis")
-                    {
-                        valuePlayerOne = int.Parse(values[1]);
-                    }
-                    else if (values[0] == "JoyStick2_Y_axis")
-                    {
-                        valuePlayerTwo = int.Parse(values[1]);
-                    }
-                }
-
-                if (player == 1)
-                {
-                    if (valuePlayerOne < 475)
-                    {
-                        mw.Playground_Slider1.Dispatcher.BeginInvoke(
-                            new Action(() =>
-                            {
-                                if (Canvas.GetTop(mw.Slider_Player1) > 0)
-                                {
-                                    Canvas.SetTop(mw.Slider_Player1, Canvas.GetTop(mw.Slider_Player1) - 5);
-                                }
-                            })
-                        );
-                    }
-                    else if (valuePlayerOne > 535)
-                    {
-                        mw.Playground_Slider1.Dispatcher.BeginInvoke(
-                            new Action(() =>
-                            {
-                                if (Canvas.GetTop(mw.Slider_Player1) < mw.Playground_Slider1.Height - mw.Slider_Player1.Height)
-                                {
-                                    Canvas.SetTop(mw.Slider_Player1, Canvas.GetTop(mw.Slider_Player1) + 5);
-                                }
-                            })
-                        );
-                    }
-                }
-                else if (player == 2)
-                {
-                    if (valuePlayerTwo < 475)
-                    {
-                        mw.Playground_Slider2.Dispatcher.BeginInvoke(
-                            new Action(() =>
-                            {
-                                if (Canvas.GetTop(mw.Slider_Player2) > 0)
-                                {
-                                    Canvas.SetTop(mw.Slider_Player2, Canvas.GetTop(mw.Slider_Player2) - 5);
-                                }
-                            })
-                        );
-                    }
-                    else if (valuePlayerTwo > 535)
-                    {
-                        mw.Playground_Slider2.Dispatcher.BeginInvoke(
-                            new Action(() =>
-                            {
-                                if (Canvas.GetTop(mw.Slider_Player2) < mw.Playground_Slider2.Height - mw.Slider_Player2.Height)
-                                {
-                                    Canvas.SetTop(mw.Slider_Player2, Canvas.GetTop(mw.Slider_Player2) + 5);
-                                }
-                            })
-                        );
-                    }
-                }
-            }
-        }*/
     }
 }

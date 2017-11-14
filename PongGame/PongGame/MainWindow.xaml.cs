@@ -45,8 +45,7 @@ namespace PongGame
         {
             switch (e.Key)
             {
-                case Key.Space:
-                    MessageBox.Show("Game started.");
+                case Key.Space: 
                     if (!isSpacePressed)
                     {
                         arduinoController = new ArduinoController("COM3");

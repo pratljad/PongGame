@@ -35,7 +35,6 @@ namespace Arduino
         private void serialport_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             message = serialport.ReadLine();
-            //Console.WriteLine(message);
         }
 
         public string returnValue()
