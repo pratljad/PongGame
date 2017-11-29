@@ -39,7 +39,6 @@ namespace Arduino
 
         public string returnValue()
         {
-            Console.WriteLine(message);
             return message;
         }
     }

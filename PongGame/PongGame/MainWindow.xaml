@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PongGame"
         mc:Ignorable="d"
-        Title="MainWindow" Height="487.086" Width="891.406" KeyDown="Window_KeyDown">
+        Title="MainWindow" Height="487.086" Width="891.406" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
     <Grid>
-        <Canvas x:Name="Playground" HorizontalAlignment="Left" Height="436" Margin="71,10,0,0" VerticalAlignment="Top" Width="742" Background="#FFD1D1D1"/>
-        <Canvas x:Name="Playground_Slider1" HorizontalAlignment="Left" Height="436" Margin="10,10,0,0" VerticalAlignment="Top" Width="57" Background="#FFD1D1D1">
-            <Rectangle x:Name="Slider_Player1" Fill="#FFFF2300" Height="160" Stroke="Black" Canvas.Top="138" Width="40" Canvas.Left="10"/>
+        <Canvas x:Name="Playground" HorizontalAlignment="Left" Height="436" Margin="9,10,0,0" VerticalAlignment="Top" Width="864" Background="#FFD1D1D1">
+            <Ellipse x:Name="Ball" Fill="#FFFF2300" Height="30" Canvas.Left="400" Stroke="Black" Canvas.Top="193" Width="30"/>
         </Canvas>
-        <Canvas x:Name="Playground_Slider2" HorizontalAlignment="Left" Height="436" Margin="818,10,0,0" VerticalAlignment="Top" Width="57" Background="#FFD1D1D1">
-            <Rectangle x:Name="Slider_Player2" Fill="#FFFF2300" Height="160" Stroke="Black" Canvas.Top="138" Width="40" Canvas.Left="10"/>
+        <Canvas x:Name="Playground_Slider1" HorizontalAlignment="Left" Height="436" Margin="9,10,0,0" VerticalAlignment="Top" Width="25" Background="#FFD1D1D1">
+            <Rectangle x:Name="Slider_Player1" Fill="#FFFF2300" Height="100" Stroke="Black" Canvas.Top="168" Width="25"/>
+        </Canvas>
+        <Canvas x:Name="Playground_Slider2" Height="436" Margin="848,10,10,0" VerticalAlignment="Top" Background="#FFD1D1D1" Width="25">
+            <Rectangle x:Name="Slider_Player2" Fill="#FFFF2300" Height="100" Stroke="Black" Canvas.Top="168" Width="25"/>
         </Canvas>
     </Grid>
 </Window>

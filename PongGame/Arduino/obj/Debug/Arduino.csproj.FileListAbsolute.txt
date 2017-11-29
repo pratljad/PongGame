@@ -3,3 +3,8 @@ C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Arduino\bin\Debug\Arduino.pdb
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Arduino\obj\Debug\Arduino.csprojResolveAssemblyReference.cache
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Arduino\obj\Debug\Arduino.dll
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Arduino\obj\Debug\Arduino.pdb
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\Arduino\bin\Debug\Arduino.dll
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\Arduino\bin\Debug\Arduino.pdb
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\Arduino\obj\Debug\Arduino.csprojResolveAssemblyReference.cache
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\Arduino\obj\Debug\Arduino.dll
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\Arduino\obj\Debug\Arduino.pdb
