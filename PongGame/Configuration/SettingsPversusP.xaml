@@ -1,0 +1,24 @@
+﻿<Window x:Class="Configuration.SettingsPversusP"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:Configuration"
+        mc:Ignorable="d"
+        Title="SettingsPversusP" Height="361.062" Width="327.876">
+    <Grid>
+        <Label x:Name="label" Content="Player VS Player" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <TextBox x:Name="TBNicknamePlayer1" HorizontalAlignment="Left" Height="23" Margin="126,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
+        <Label x:Name="label1" Content="Player 1" HorizontalAlignment="Left" Margin="10,49,0,0" VerticalAlignment="Top" FontSize="15"/>
+        <Label x:Name="label2" Content="Player 2" HorizontalAlignment="Left" Margin="10,162,0,0" VerticalAlignment="Top" FontSize="15"/>
+        <Label x:Name="label1_Copy" Content="Nickname:" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label1_Copy1" Content="Color:" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TBNicknamePlayer2" HorizontalAlignment="Left" Height="23" Margin="126,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
+        <xctk:ColorPicker x:Name="ColorPlayer2" Margin="126,235,27,0" Height="26" VerticalAlignment="Top"/>
+        <Label x:Name="label1_Copy2" Content="Nickname:" HorizontalAlignment="Left" Margin="10,202,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label1_Copy3" Content="Color:" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top"/>
+        <xctk:ColorPicker x:Name="ColorPlayer1" Margin="126,117,27,0" Height="26" VerticalAlignment="Top"/>
+        <Button x:Name="BTN_Start" Content="Start the Game!" HorizontalAlignment="Left" Margin="186,280,0,0" VerticalAlignment="Top" Width="101" Height="25" Click="BTN_Start_Click" BorderBrush="Black"/>
+    </Grid>
+</Window>

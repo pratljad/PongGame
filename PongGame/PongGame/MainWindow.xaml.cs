@@ -43,12 +43,101 @@ namespace PongGame
 
         int winner = -1;
 
-        public MainWindow()
+        string nicknamePlayer1;
+        string nicknamePlayer2;
+
+        int pointsPlayer1;
+        int pointsPlayer2;
+
+        Color colorPlayer1;
+        Color colorPlayer2;
+
+        public MainWindow(string nickname1, string nickname2, Color colorPlayer1, Color colorPlayer2)
         {
             InitializeComponent();
 
             myGame = new Pong(this);
             isPlaying = false;
+
+            nicknamePlayer1 = nickname1;
+            nicknamePlayer2 = nickname2;
+
+            this.colorPlayer1 = colorPlayer1;
+            this.colorPlayer2 = colorPlayer2;
+
+            pointsPlayer1 = 0;
+            pointsPlayer2 = 0;
+
+            setNicknameAndColor();
+        }
+
+        private void setNicknameAndColor()
+        {
+            Slider_Player1.Fill = new SolidColorBrush(colorPlayer1);
+            Slider_Player2.Fill = new SolidColorBrush(colorPlayer2);
+
+            TF_Nickname1.Content = nicknamePlayer1;
+            TF_Nickname2.Content = nicknamePlayer2;
+        }
+
+        private void addPoint(int player)
+        {
+            if(player == 1)
+            {
+                switch(pointsPlayer1)
+                {
+                    case 0:
+                        p1p1.Fill = new SolidColorBrush(colorPlayer1);
+                        pointsPlayer1++;
+                        break;
+                    case 1:
+                        p1p2.Fill = new SolidColorBrush(colorPlayer1);
+                        pointsPlayer1++;
+                        break;
+                    case 2:
+                        p1p3.Fill = new SolidColorBrush(colorPlayer1);
+                        pointsPlayer1++;
+                        break;
+                    case 3:
+                        p1p4.Fill = new SolidColorBrush(colorPlayer1);
+                        pointsPlayer1++;
+                        break;
+                    case 4:
+                        p1p5.Fill = new SolidColorBrush(colorPlayer1);
+                        pointsPlayer1++;
+
+                        MessageBox.Show("Now they always say congratulationssss.");
+                        break;
+                }
+            }
+            else
+            {
+                switch (pointsPlayer2)
+                {
+                    case 0:
+                        p2p1.Fill = new SolidColorBrush(colorPlayer2);
+                        pointsPlayer2++;
+                        break;
+                    case 1:
+                        p2p2.Fill = new SolidColorBrush(colorPlayer2);
+                        pointsPlayer2++;
+                        break;
+                    case 2:
+                        p2p3.Fill = new SolidColorBrush(colorPlayer2);
+                        pointsPlayer2++;
+                        break;
+                    case 3:
+                        p2p4.Fill = new SolidColorBrush(colorPlayer2);
+                        pointsPlayer2++;
+                        break;
+                    case 4:
+                        p2p5.Fill = new SolidColorBrush(colorPlayer2);
+                        pointsPlayer2++;
+
+                        MessageBox.Show("Now they always say congratulationssss.");
+                        break;
+                }
+            }
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -126,7 +215,11 @@ namespace PongGame
 
                 if (winner != -1)
                 {
-                    MessageBox.Show("Player " + winner + " WON!");
+                    if (winner == 1)
+                        addPoint(1);
+                    else
+                        addPoint(2);
+
                     winner = -1;
                 }
             }

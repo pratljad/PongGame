@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PongGame", "PongGame\PongGa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arduino", "Arduino\Arduino.csproj", "{4B535980-C91C-401F-80B8-25270D3AC319}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuration", "Configuration\Configuration.csproj", "{C92B5827-2ADD-4F5D-9571-DF79A990F85C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4B535980-C91C-401F-80B8-25270D3AC319}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B535980-C91C-401F-80B8-25270D3AC319}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B535980-C91C-401F-80B8-25270D3AC319}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C92B5827-2ADD-4F5D-9571-DF79A990F85C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C92B5827-2ADD-4F5D-9571-DF79A990F85C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C92B5827-2ADD-4F5D-9571-DF79A990F85C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C92B5827-2ADD-4F5D-9571-DF79A990F85C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
