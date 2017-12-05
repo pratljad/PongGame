@@ -27,15 +27,10 @@ namespace Configuration
 
         private void BTN_PlayervsPlayer_Click(object sender, RoutedEventArgs e)
         {
-            SettingsPversusP w = new SettingsPversusP();
+            SettingsPP w = new SettingsPP();
             w.Show();
 
             this.Close();
-        }
-
-        private void BTN_PlayervsKI_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

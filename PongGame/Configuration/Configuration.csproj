@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C92B5827-2ADD-4F5D-9571-DF79A990F85C}</ProjectGuid>
+    <ProjectGuid>{08A3D7FF-8817-4D67-A858-2F5978C5C9F2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Configuration</RootNamespace>
@@ -79,8 +79,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="SettingsPversusP.xaml.cs">
-      <DependentUpon>SettingsPversusP.xaml</DependentUpon>
+    <Compile Include="SettingsPP.xaml.cs">
+      <DependentUpon>SettingsPP.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -94,7 +94,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="SettingsPversusP.xaml">
+    <Page Include="SettingsPP.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

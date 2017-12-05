@@ -1,4 +1,4 @@
-﻿<Window x:Class="Configuration.SettingsPversusP"
+﻿<Window x:Class="Configuration.SettingsPP"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:Configuration"
         mc:Ignorable="d"
-        Title="SettingsPversusP" Height="361.062" Width="327.876">
+        Title="SettingsPP" Height="364.492" Width="318.132">
     <Grid>
         <Label x:Name="label" Content="Player VS Player" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18"/>
         <TextBox x:Name="TBNicknamePlayer1" HorizontalAlignment="Left" Height="23" Margin="126,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>

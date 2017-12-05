@@ -11,23 +11,22 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Xceed.Wpf.Toolkit;
 
 namespace Configuration
 {
     /// <summary>
-    /// Interaktionslogik für SettingsPversusP.xaml
+    /// Interaktionslogik für SettingsPP.xaml
     /// </summary>
-    public partial class SettingsPversusP : Window
+    public partial class SettingsPP : Window
     {
-        public SettingsPversusP()
+        public SettingsPP()
         {
             InitializeComponent();
         }
 
         private void BTN_Start_Click(object sender, RoutedEventArgs e)
         {
-            // am server noch checken ob username schon vorhanden
+            // am webservice noch checken ob username schon vorhanden
 
             if (TBNicknamePlayer1.Text != "" && TBNicknamePlayer2.Text != "" && ColorPlayer1.SelectedColorText != "" && ColorPlayer2.SelectedColorText != "" && TBNicknamePlayer1.Text != TBNicknamePlayer2.Text)
             {

@@ -5,11 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Configuration"
         mc:Ignorable="d"
-        Title="MainWindow" Height="260.177" Width="288.053">
+        Title="MainWindow" Height="259.615" Width="282.692">
     <Grid>
         <Button x:Name="BTN_PlayervsPlayer" Content="Player VS Player" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" Width="239" Height="66" Click="BTN_PlayervsPlayer_Click"/>
         <Label x:Name="label" Content="Welcome to our Pong Game!" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18"/>
-        <Button x:Name="BTN_PlayervsKI" Content="Player VS KI" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Width="239" Height="66" Click="BTN_PlayervsKI_Click"/>
-
+        <Button x:Name="BTN_PlayervsKI" Content="Player VS KI" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Width="239" Height="66"/>
     </Grid>
 </Window>

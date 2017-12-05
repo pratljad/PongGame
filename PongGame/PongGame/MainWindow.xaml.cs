@@ -14,13 +14,34 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Threading;
 using Arduino;
+using System.Timers;
 
 namespace PongGame
 {
-    public struct ControlePlayer
+    public struct PlayerControl
     {
         public bool up;
         public bool down;
+    }
+
+    public struct BallControl
+    {
+        public Ellipse ball;
+        public double movingYDistance;
+        public int movingXDistance;
+
+        public BallControl(Ellipse ball, int movingXDistance, double movingYDistance)
+        {
+            this.ball = ball;
+            this.movingXDistance = movingXDistance;
+            this.movingYDistance = movingYDistance;
+        }
+    }
+
+    public struct SliderControl
+    {
+        public Rectangle slider;
+        public int movingDistance;
     }
 
     /// <summary>
@@ -30,19 +51,23 @@ namespace PongGame
     {
         Pong myGame;
 
-        Thread pongThreadPlayerOne;
-        Thread pongThreadPlayerTwo;
         Thread pongThreadBall;
+        Thread arduinoGetDataAndMovingSliderThread;
 
         bool isPlaying;
-
-        ControlePlayer player1 = new ControlePlayer();
-        ControlePlayer player2 = new ControlePlayer();
-
-        ArduinoController arduinoController;
-
         int winner = -1;
 
+        PlayerControl player1 = new PlayerControl();
+        PlayerControl player2 = new PlayerControl();
+        ArduinoController arduinoController;
+
+        // Timer
+        System.Timers.Timer tt = new System.Timers.Timer(1000);
+        int seconds = 0;
+        int minutes = 0;
+        string actualTime = "";
+
+        // Nicknames and Colors
         string nicknamePlayer1;
         string nicknamePlayer2;
 
@@ -69,6 +94,8 @@ namespace PongGame
             pointsPlayer2 = 0;
 
             setNicknameAndColor();
+
+            tt.Elapsed += new System.Timers.ElapsedEventHandler(_timer_Elapsed);
         }
 
         private void setNicknameAndColor()
@@ -80,11 +107,70 @@ namespace PongGame
             TF_Nickname2.Content = nicknamePlayer2;
         }
 
+        public void _timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            seconds += 1;
+
+            if (seconds == 60)
+            {
+                minutes += 1;
+                seconds = 0;
+            }
+
+            if (seconds < 10 && minutes < 10)
+            {
+                actualTime = "0" + minutes + ":0" + seconds;
+            }
+            else if (seconds < 10 && minutes > 9)
+            {
+                actualTime = minutes + ":0" + seconds;
+            }
+            else if (seconds > 9 && minutes < 10)
+            {
+                actualTime = "0" + minutes + ":" + seconds;
+            }
+
+            Dispatcher.Invoke(
+                new Action(() =>
+                {
+                    TF_Timer.Content = actualTime;
+                })
+            );
+        }
+
+        private void reset()
+        {
+            pointsPlayer1 = 0;
+            pointsPlayer2 = 0;
+
+            p1p1.Fill = Brushes.White;
+            p1p2.Fill = Brushes.White;
+            p1p3.Fill = Brushes.White;
+            p1p4.Fill = Brushes.White;
+            p1p5.Fill = Brushes.White;
+            p2p1.Fill = Brushes.White;
+            p2p2.Fill = Brushes.White;
+            p2p3.Fill = Brushes.White;
+            p2p4.Fill = Brushes.White;
+            p2p5.Fill = Brushes.White;
+
+            seconds = 0;
+            minutes = 0;
+            actualTime = "";
+
+            Dispatcher.Invoke(
+                new Action(() =>
+                {
+                    TF_Timer.Content = "00:00";
+                })
+            );
+        }
+
         private void addPoint(int player)
         {
-            if(player == 1)
+            if (player == 1)
             {
-                switch(pointsPlayer1)
+                switch (pointsPlayer1)
                 {
                     case 0:
                         p1p1.Fill = new SolidColorBrush(colorPlayer1);
@@ -105,8 +191,11 @@ namespace PongGame
                     case 4:
                         p1p5.Fill = new SolidColorBrush(colorPlayer1);
                         pointsPlayer1++;
+                        reset();
 
                         MessageBox.Show("Now they always say congratulationssss.");
+
+                        // Neuer Eintrag am Webservice / Datenbank und Rangliste refreshen
                         break;
                 }
             }
@@ -133,8 +222,11 @@ namespace PongGame
                     case 4:
                         p2p5.Fill = new SolidColorBrush(colorPlayer2);
                         pointsPlayer2++;
+                        reset();
 
                         MessageBox.Show("Now they always say congratulationssss.");
+
+                        // Neuer Eintrag am Webservice / Datenbank und Rangliste refreshen
                         break;
                 }
             }
@@ -149,11 +241,15 @@ namespace PongGame
                     {
                         arduinoController = new ArduinoController("COM6");
                         setIsPlaying(true);
+
+                        tt.Start();
                     }
                     else
                     {
                         setIsPlaying(false);
                         MessageBox.Show("Game ended.");
+
+                        tt.Stop();
                     }
 
                     break;
@@ -209,14 +305,19 @@ namespace PongGame
 
             if (!isPlaying)
             {
-                pongThreadPlayerOne.Abort();
-                pongThreadPlayerTwo.Abort();
+                tt.Stop();
+
                 pongThreadBall.Abort();
+                arduinoGetDataAndMovingSliderThread.Abort();
+
+                //pongThreadPlayerOne.Abort();
+                //pongThreadPlayerTwo.Abort();
 
                 if (winner != -1)
                 {
                     if (winner == 1)
                         addPoint(1);
+
                     else
                         addPoint(2);
 
@@ -231,12 +332,18 @@ namespace PongGame
                 player2.up = false;
                 player2.down = false;
 
-                pongThreadPlayerOne = new Thread(myGame.runPlayerOneKeys);
-                pongThreadPlayerTwo = new Thread(myGame.runPlayerTwoKeys);
+                arduinoGetDataAndMovingSliderThread = new Thread(myGame.readDataFromArduino);
                 pongThreadBall = new Thread(myGame.ballMove);
 
-                pongThreadPlayerOne.Start();
-                pongThreadPlayerTwo.Start();
+                //pongThreadPlayerOne = new Thread(myGame.runPlayerOneKeys);
+                //pongThreadPlayerTwo = new Thread(myGame.runPlayerTwoKeys);
+                //pongThreadPlayerOne = new Thread(myGame.runPlayerOne);
+                //pongThreadPlayerTwo = new Thread(myGame.runPlayerTwo);
+                
+
+                arduinoGetDataAndMovingSliderThread.Start();
+                //pongThreadPlayerOne.Start();
+                //pongThreadPlayerTwo.Start();
                 pongThreadBall.Start();
             }
         }
@@ -246,12 +353,12 @@ namespace PongGame
             return arduinoController;
         }
 
-        public ControlePlayer getControlPlayer1()
+        public PlayerControl getControlPlayer1()
         {
             return player1;
         }
 
-        public ControlePlayer getControlPlayer2()
+        public PlayerControl getControlPlayer2()
         {
             return player2;
         }
