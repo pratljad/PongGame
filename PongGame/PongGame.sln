@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PongGame", "PongGame\PongGame.csproj", "{7DF534E2-BF2D-416D-9E8A-D40CF2D9D131}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arduino", "Arduino\Arduino.csproj", "{4B535980-C91C-401F-80B8-25270D3AC319}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuration", "Configuration\Configuration.csproj", "{C92B5827-2ADD-4F5D-9571-DF79A990F85C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7DF534E2-BF2D-416D-9E8A-D40CF2D9D131}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DF534E2-BF2D-416D-9E8A-D40CF2D9D131}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DF534E2-BF2D-416D-9E8A-D40CF2D9D131}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DF534E2-BF2D-416D-9E8A-D40CF2D9D131}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B535980-C91C-401F-80B8-25270D3AC319}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B535980-C91C-401F-80B8-25270D3AC319}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B535980-C91C-401F-80B8-25270D3AC319}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B535980-C91C-401F-80B8-25270D3AC319}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C92B5827-2ADD-4F5D-9571-DF79A990F85C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C92B5827-2ADD-4F5D-9571-DF79A990F85C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C92B5827-2ADD-4F5D-9571-DF79A990F85C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C92B5827-2ADD-4F5D-9571-DF79A990F85C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

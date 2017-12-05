@@ -1,0 +1,48 @@
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\PongGame.exe.config
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\PongGame.exe
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\PongGame.pdb
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\obj\Debug\PongGame.csprojResolveAssemblyReference.cache
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\obj\Debug\MainWindow.g.cs
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\obj\Debug\App.g.cs
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\obj\Debug\PongGame_MarkupCompile.cache
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\obj\Debug\PongGame_MarkupCompile.lref
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\obj\Debug\MainWindow.baml
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\obj\Debug\PongGame.g.resources
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\obj\Debug\PongGame.Properties.Resources.resources
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\obj\Debug\PongGame.csproj.GenerateResource.Cache
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\obj\Debug\PongGame.exe
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\obj\Debug\PongGame.pdb
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\Arduino.dll
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\Arduino.pdb
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\PongGame\bin\Debug\PongGame.exe.config
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\PongGame\obj\Debug\PongGame.exe
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\PongGame\obj\Debug\PongGame.pdb
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\PongGame\bin\Debug\PongGame.exe
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\PongGame\bin\Debug\PongGame.pdb
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\PongGame\bin\Debug\Arduino.dll
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\PongGame\bin\Debug\Arduino.pdb
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\PongGame\obj\Debug\PongGame.csprojResolveAssemblyReference.cache
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\PongGame\obj\Debug\MainWindow.g.cs
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\PongGame\obj\Debug\App.g.cs
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\PongGame\obj\Debug\PongGame_MarkupCompile.cache
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\PongGame\obj\Debug\PongGame_MarkupCompile.lref
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\PongGame\obj\Debug\MainWindow.baml
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\PongGame\obj\Debug\PongGame.g.resources
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\PongGame\obj\Debug\PongGame.Properties.Resources.resources
+D:\Schule\5AHIFS\SYP\Ballmovement\PongGame\PongGame\obj\Debug\PongGame.csproj.GenerateResource.Cache
+C:\Users\User\Desktop\PongGame\PongGame\PongGame\bin\Debug\PongGame.exe.config
+C:\Users\User\Desktop\PongGame\PongGame\PongGame\obj\Debug\PongGame.exe
+C:\Users\User\Desktop\PongGame\PongGame\PongGame\obj\Debug\PongGame.pdb
+C:\Users\User\Desktop\PongGame\PongGame\PongGame\bin\Debug\PongGame.exe
+C:\Users\User\Desktop\PongGame\PongGame\PongGame\bin\Debug\PongGame.pdb
+C:\Users\User\Desktop\PongGame\PongGame\PongGame\bin\Debug\Arduino.dll
+C:\Users\User\Desktop\PongGame\PongGame\PongGame\bin\Debug\Arduino.pdb
+C:\Users\User\Desktop\PongGame\PongGame\PongGame\obj\Debug\PongGame.csprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\PongGame\PongGame\PongGame\obj\Debug\MainWindow.g.cs
+C:\Users\User\Desktop\PongGame\PongGame\PongGame\obj\Debug\App.g.cs
+C:\Users\User\Desktop\PongGame\PongGame\PongGame\obj\Debug\PongGame_MarkupCompile.cache
+C:\Users\User\Desktop\PongGame\PongGame\PongGame\obj\Debug\PongGame_MarkupCompile.lref
+C:\Users\User\Desktop\PongGame\PongGame\PongGame\obj\Debug\MainWindow.baml
+C:\Users\User\Desktop\PongGame\PongGame\PongGame\obj\Debug\PongGame.g.resources
+C:\Users\User\Desktop\PongGame\PongGame\PongGame\obj\Debug\PongGame.Properties.Resources.resources
+C:\Users\User\Desktop\PongGame\PongGame\PongGame\obj\Debug\PongGame.csproj.GenerateResource.Cache

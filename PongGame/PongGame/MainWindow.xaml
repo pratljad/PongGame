@@ -1,0 +1,32 @@
+﻿<Window x:Class="PongGame.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PongGame"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="540.967" Width="891.406" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
+    <Grid>
+        <Canvas x:Name="Playground" HorizontalAlignment="Left" Height="436" Margin="9,10,0,0" VerticalAlignment="Top" Width="864" Background="#FFD1D1D1">
+            <Ellipse x:Name="Ball" Fill="#FFFF2300" Height="30" Canvas.Left="400" Stroke="Black" Canvas.Top="193" Width="30"/>
+        </Canvas>
+        <Canvas x:Name="Playground_Slider1" HorizontalAlignment="Left" Height="436" Margin="9,10,0,0" VerticalAlignment="Top" Width="25" Background="#FFD1D1D1">
+            <Rectangle x:Name="Slider_Player1" Fill="#FFFF2300" Height="100" Stroke="Black" Canvas.Top="168" Width="25"/>
+        </Canvas>
+        <Canvas x:Name="Playground_Slider2" Height="436" Margin="848,10,10,0" VerticalAlignment="Top" Background="#FFD1D1D1" Width="25">
+            <Rectangle x:Name="Slider_Player2" Fill="#FFFF2300" Height="100" Stroke="Black" Canvas.Top="168" Width="25"/>
+        </Canvas>
+        <Label x:Name="TF_Nickname1" Content="Player1" HorizontalAlignment="Left" Margin="10,451,0,0" VerticalAlignment="Top" Height="50" Width="200" FontSize="27" FontFamily="Magneto"/>
+        <Label x:Name="TF_Nickname2" Content="Player2" Margin="675,451,0,0" VerticalAlignment="Top" Height="50" Width="198" FontSize="27" FontFamily="Magneto" HorizontalContentAlignment="Right" HorizontalAlignment="Left"/>
+        <Rectangle x:Name="p1p1" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="30" Margin="363,460,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p1p2" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="30" Margin="328,460,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p1p3" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="30" Margin="293,460,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p1p4" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="30" Margin="258,460,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p1p5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="30" Margin="223,460,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p2p1" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="30" Margin="455,460,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p2p2" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="30" Margin="490,460,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p2p3" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="30" Margin="525,460,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p2p4" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="30" Margin="560,460,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p2p5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="30" Margin="595,460,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+    </Grid>
+</Window>
