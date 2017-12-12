@@ -20,6 +20,7 @@ namespace Configuration
     /// </summary>
     public partial class MainWindow : Window
     {
+        public bool opened = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -27,8 +28,18 @@ namespace Configuration
 
         private void BTN_PlayervsPlayer_Click(object sender, RoutedEventArgs e)
         {
-            SettingsPP w = new SettingsPP();
-            w.Show();
+            if (!opened)
+            {
+                SettingsPP w = new SettingsPP(this);
+                w.Show();
+                opened = true;
+            }
+        }
+
+        private void BTN_Leaderboard_Click(object sender, RoutedEventArgs e)
+        {
+            Leaderboards l = new Leaderboards();
+            l.Show();
 
             this.Close();
         }

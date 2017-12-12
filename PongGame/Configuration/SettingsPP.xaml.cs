@@ -19,15 +19,17 @@ namespace Configuration
     /// </summary>
     public partial class SettingsPP : Window
     {
-        public SettingsPP()
+        private MainWindow _mw = null;
+        public SettingsPP(MainWindow mw)
         {
             InitializeComponent();
+            _mw = mw;
+            ColorPlayer1.SelectedColor = Colors.Blue;
+            ColorPlayer2.SelectedColor = Colors.Green;
         }
 
         private void BTN_Start_Click(object sender, RoutedEventArgs e)
         {
-            // am webservice noch checken ob username schon vorhanden
-
             if (TBNicknamePlayer1.Text != "" && TBNicknamePlayer2.Text != "" && ColorPlayer1.SelectedColorText != "" && ColorPlayer2.SelectedColorText != "" && TBNicknamePlayer1.Text != TBNicknamePlayer2.Text)
             {
                 PongGame.MainWindow pg = new PongGame.MainWindow(TBNicknamePlayer1.Text, TBNicknamePlayer2.Text, (Color)ColorPlayer1.SelectedColor, (Color)ColorPlayer2.SelectedColor);
@@ -38,6 +40,11 @@ namespace Configuration
             {
                 BTN_Start.BorderBrush = Brushes.Red;
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _mw.opened = false;
         }
     }
 }

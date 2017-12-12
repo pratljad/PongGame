@@ -15,6 +15,9 @@ using System.Windows.Shapes;
 using System.Threading;
 using Arduino;
 using System.Timers;
+using System.IO;
+using System.Runtime.Serialization.Json;
+using System.Net;
 
 namespace PongGame
 {
@@ -53,6 +56,8 @@ namespace PongGame
 
         Thread pongThreadBall;
         Thread arduinoGetDataAndMovingSliderThread;
+        Thread pongThreadPlayerOne;
+        Thread pongThreadPlayerTwo;
 
         bool isPlaying;
         int winner = -1;
@@ -66,16 +71,12 @@ namespace PongGame
         int seconds = 0;
         int minutes = 0;
         string actualTime = "";
+        
+        Player firstPlayer;
+        Player secondPlayer;
 
-        // Nicknames and Colors
-        string nicknamePlayer1;
-        string nicknamePlayer2;
-
-        int pointsPlayer1;
-        int pointsPlayer2;
-
-        Color colorPlayer1;
-        Color colorPlayer2;
+        Rectangle[] firstPlayerRectangles;
+        Rectangle[] secondPlayerRectangles;
 
         public MainWindow(string nickname1, string nickname2, Color colorPlayer1, Color colorPlayer2)
         {
@@ -84,27 +85,29 @@ namespace PongGame
             myGame = new Pong(this);
             isPlaying = false;
 
-            nicknamePlayer1 = nickname1;
-            nicknamePlayer2 = nickname2;
-
-            this.colorPlayer1 = colorPlayer1;
-            this.colorPlayer2 = colorPlayer2;
-
-            pointsPlayer1 = 0;
-            pointsPlayer2 = 0;
+            initRectangleArrays();
+            firstPlayer = new Player(nickname1, colorPlayer1);
+            secondPlayer = new Player(nickname2, colorPlayer2);
 
             setNicknameAndColor();
 
-            tt.Elapsed += new System.Timers.ElapsedEventHandler(_timer_Elapsed);
+            tt.Elapsed += new ElapsedEventHandler(_timer_Elapsed);
+            arduinoController = new ArduinoController("COM3");
+        }
+
+        private void initRectangleArrays()
+        {
+            firstPlayerRectangles = new Rectangle[] { p1p1, p1p2, p1p3, p1p4, p1p5 };
+            secondPlayerRectangles = new Rectangle[] { p2p1, p2p2, p2p3, p2p4, p2p5 };
         }
 
         private void setNicknameAndColor()
         {
-            Slider_Player1.Fill = new SolidColorBrush(colorPlayer1);
-            Slider_Player2.Fill = new SolidColorBrush(colorPlayer2);
+            Slider_Player1.Fill = new SolidColorBrush(firstPlayer.getColor());
+            Slider_Player2.Fill = new SolidColorBrush(secondPlayer.getColor());
 
-            TF_Nickname1.Content = nicknamePlayer1;
-            TF_Nickname2.Content = nicknamePlayer2;
+            TF_Nickname1.Content = firstPlayer.getNickname();
+            TF_Nickname2.Content = secondPlayer.getNickname();
         }
 
         public void _timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -140,19 +143,14 @@ namespace PongGame
 
         private void reset()
         {
-            pointsPlayer1 = 0;
-            pointsPlayer2 = 0;
+            firstPlayer.resetPoints();
+            secondPlayer.resetPoints();
 
-            p1p1.Fill = Brushes.White;
-            p1p2.Fill = Brushes.White;
-            p1p3.Fill = Brushes.White;
-            p1p4.Fill = Brushes.White;
-            p1p5.Fill = Brushes.White;
-            p2p1.Fill = Brushes.White;
-            p2p2.Fill = Brushes.White;
-            p2p3.Fill = Brushes.White;
-            p2p4.Fill = Brushes.White;
-            p2p5.Fill = Brushes.White;
+            firstPlayer.resetWonStatus();
+            secondPlayer.resetWonStatus();
+
+            resetBrushesForRectangle(firstPlayerRectangles);
+            resetBrushesForRectangle(secondPlayerRectangles);
 
             seconds = 0;
             minutes = 0;
@@ -166,69 +164,92 @@ namespace PongGame
             );
         }
 
+        private void resetBrushesForRectangle(Rectangle[] rectangles)
+        {
+            foreach(Rectangle r in rectangles)
+            {
+                r.Fill = Brushes.White;
+            }
+        }
+
         private void addPoint(int player)
         {
             if (player == 1)
             {
-                switch (pointsPlayer1)
-                {
-                    case 0:
-                        p1p1.Fill = new SolidColorBrush(colorPlayer1);
-                        pointsPlayer1++;
-                        break;
-                    case 1:
-                        p1p2.Fill = new SolidColorBrush(colorPlayer1);
-                        pointsPlayer1++;
-                        break;
-                    case 2:
-                        p1p3.Fill = new SolidColorBrush(colorPlayer1);
-                        pointsPlayer1++;
-                        break;
-                    case 3:
-                        p1p4.Fill = new SolidColorBrush(colorPlayer1);
-                        pointsPlayer1++;
-                        break;
-                    case 4:
-                        p1p5.Fill = new SolidColorBrush(colorPlayer1);
-                        pointsPlayer1++;
-                        reset();
-
-                        MessageBox.Show("Now they always say congratulationssss.");
-
-                        // Neuer Eintrag am Webservice / Datenbank und Rangliste refreshen
-                        break;
-                }
+                setPoints(firstPlayer, firstPlayerRectangles);
             }
             else
             {
-                switch (pointsPlayer2)
+                setPoints(secondPlayer, secondPlayerRectangles);
+            }
+        }
+
+        public void setPoints(Player player, Rectangle[] playerRectangles)
+        {
+            switch (player.getPoints())
+            {
+                case 0:
+                    playerRectangles[0].Fill = new SolidColorBrush(player.getColor());
+                    player.addPoints();
+                    break;
+                case 1:
+                    playerRectangles[1].Fill = new SolidColorBrush(player.getColor());
+                    player.addPoints();
+                    break;
+                case 2:
+                    playerRectangles[2].Fill = new SolidColorBrush(player.getColor());
+                    player.addPoints();
+                    break;
+                case 3:
+                    playerRectangles[3].Fill = new SolidColorBrush(player.getColor());
+                    player.addPoints();
+                    break;
+                case 4:
+                    playerRectangles[4].Fill = new SolidColorBrush(player.getColor());
+                    player.addPoints();
+                    player.playerWon();
+                    
+
+                    MessageBox.Show("Player: " + player.getNickname() + " has won!! Congratulations!");
+                    addStatisticsToWebserver();
+                    reset();
+                    break;
+            }
+        }
+
+        private void addStatisticsToWebserver()
+        {
+            string requestin = "http://127.0.0.1:3000/addscore";
+
+            object data = new Userdata(new int[] { firstPlayer.getPoints(), secondPlayer.getPoints() }
+                                            , new string[] { firstPlayer.getNickname(), secondPlayer.getNickname() }
+                                            , new int[] { firstPlayer.getWinStatus(), secondPlayer.getWinStatus() });
+
+            try
+            {
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(requestin);
+                httpWebRequest.ContentType = "application/json; charset=utf-8";
+                httpWebRequest.Method = "POST";
+
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
-                    case 0:
-                        p2p1.Fill = new SolidColorBrush(colorPlayer2);
-                        pointsPlayer2++;
-                        break;
-                    case 1:
-                        p2p2.Fill = new SolidColorBrush(colorPlayer2);
-                        pointsPlayer2++;
-                        break;
-                    case 2:
-                        p2p3.Fill = new SolidColorBrush(colorPlayer2);
-                        pointsPlayer2++;
-                        break;
-                    case 3:
-                        p2p4.Fill = new SolidColorBrush(colorPlayer2);
-                        pointsPlayer2++;
-                        break;
-                    case 4:
-                        p2p5.Fill = new SolidColorBrush(colorPlayer2);
-                        pointsPlayer2++;
-                        reset();
+                    DataContractJsonSerializer ser = new DataContractJsonSerializer(data.GetType());
+                    MemoryStream ms = new MemoryStream();
+                    ser.WriteObject(ms, data);
+                    String json = Encoding.UTF8.GetString(ms.ToArray());
 
-                        MessageBox.Show("Now they always say congratulationssss.");
-
-                        // Neuer Eintrag am Webservice / Datenbank und Rangliste refreshen
-                        break;
+                    streamWriter.Write(json);
+                    streamWriter.Flush();
                 }
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var responseText = streamReader.ReadToEnd();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -239,7 +260,6 @@ namespace PongGame
                 case Key.Space: 
                     if (!isPlaying)
                     {
-                        arduinoController = new ArduinoController("COM6");
                         setIsPlaying(true);
 
                         tt.Start();
@@ -247,7 +267,7 @@ namespace PongGame
                     else
                     {
                         setIsPlaying(false);
-                        MessageBox.Show("Game ended.");
+                        MessageBox.Show("Game paused.");
 
                         tt.Stop();
                     }
@@ -310,8 +330,8 @@ namespace PongGame
                 pongThreadBall.Abort();
                 arduinoGetDataAndMovingSliderThread.Abort();
 
-                //pongThreadPlayerOne.Abort();
-                //pongThreadPlayerTwo.Abort();
+                pongThreadPlayerOne.Abort();
+                pongThreadPlayerTwo.Abort();
 
                 if (winner != -1)
                 {
@@ -335,15 +355,15 @@ namespace PongGame
                 arduinoGetDataAndMovingSliderThread = new Thread(myGame.readDataFromArduino);
                 pongThreadBall = new Thread(myGame.ballMove);
 
-                //pongThreadPlayerOne = new Thread(myGame.runPlayerOneKeys);
-                //pongThreadPlayerTwo = new Thread(myGame.runPlayerTwoKeys);
+                pongThreadPlayerOne = new Thread(myGame.runPlayerOneKeys);
+                pongThreadPlayerTwo = new Thread(myGame.runPlayerTwoKeys);
                 //pongThreadPlayerOne = new Thread(myGame.runPlayerOne);
                 //pongThreadPlayerTwo = new Thread(myGame.runPlayerTwo);
                 
 
                 arduinoGetDataAndMovingSliderThread.Start();
-                //pongThreadPlayerOne.Start();
-                //pongThreadPlayerTwo.Start();
+                pongThreadPlayerOne.Start();
+                pongThreadPlayerTwo.Start();
                 pongThreadBall.Start();
             }
         }
@@ -368,6 +388,11 @@ namespace PongGame
             if (player == 1 || player == 2)
                 winner = (player==1) ? 2 : 1;
 
+            setIsPlaying(false);
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
             setIsPlaying(false);
         }
     }

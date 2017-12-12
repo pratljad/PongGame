@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PongGame"
         mc:Ignorable="d"
-        Title="MainWindow" Height="547.303" Width="891.406" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
+        Title="MainWindow" Height="547.303" Width="891.406" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp" Closed="Window_Closed">
     <Grid>
         <Canvas x:Name="Playground" HorizontalAlignment="Left" Height="436" Margin="9,10,0,0" VerticalAlignment="Top" Width="864" Background="#FFD1D1D1">
             <Ellipse x:Name="Ball" Fill="#FFFF2300" Height="30" Canvas.Left="400" Stroke="Black" Canvas.Top="193" Width="30"/>

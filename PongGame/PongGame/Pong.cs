@@ -18,7 +18,7 @@ namespace PongGame
         private BallControl ballControl;
 
         public bool directionisLeft = false;
-        private int maxAngle = 30;
+        private int maxAngle = 50;
 
 
         public Pong(MainWindow mw)
