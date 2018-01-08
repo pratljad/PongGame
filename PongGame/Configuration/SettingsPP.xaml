@@ -4,21 +4,53 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="14"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        
         xmlns:local="clr-namespace:Configuration"
         mc:Ignorable="d"
-        Title="SettingsPP" Height="364.492" Width="318.132" Closed="Window_Closed">
-    <Grid>
-        <Label x:Name="label" Content="Player VS Player" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18"/>
-        <TextBox x:Name="TBNicknamePlayer1" HorizontalAlignment="Left" Height="23" Margin="126,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
-        <Label x:Name="label1" Content="Player 1" HorizontalAlignment="Left" Margin="10,49,0,0" VerticalAlignment="Top" FontSize="15"/>
-        <Label x:Name="label2" Content="Player 2" HorizontalAlignment="Left" Margin="10,162,0,0" VerticalAlignment="Top" FontSize="15"/>
-        <Label x:Name="label1_Copy" Content="Nickname:" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label1_Copy1" Content="Color:" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="TBNicknamePlayer2" HorizontalAlignment="Left" Height="23" Margin="126,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
-        <xctk:ColorPicker x:Name="ColorPlayer2" Margin="126,235,27,0" Height="26" VerticalAlignment="Top"/>
-        <Label x:Name="label1_Copy2" Content="Nickname:" HorizontalAlignment="Left" Margin="10,202,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label1_Copy3" Content="Color:" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top"/>
-        <xctk:ColorPicker x:Name="ColorPlayer1" Margin="126,117,27,0" Height="26" VerticalAlignment="Top"/>
-        <Button x:Name="BTN_Start" Content="Start the Game!" HorizontalAlignment="Left" Margin="186,280,0,0" VerticalAlignment="Top" Width="101" Height="25" Click="BTN_Start_Click" BorderBrush="Black"/>
+        Title="SettingsPP" Height="377.496" Width="655.127" Closed="Window_Closed">
+
+    <Grid Height="383" VerticalAlignment="Top">
+        <materialDesign:Card Padding="20" Margin="10,10,9.8,0" >
+            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" HorizontalAlignment="Center" Width="Auto">
+            </TextBlock>
+        </materialDesign:Card>
+        <TextBox x:Name="TBNicknamePlayer1" HorizontalAlignment="Left" Height="45" Margin="75,102,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="240" GotKeyboardFocus="TBNicknamePlayer1_GotKeyboardFocus" LostKeyboardFocus="TBNicknamePlayer1_LostKeyboardFocus" Text="Nickname" FontSize="20"/>
+        <TextBox x:Name="TBNicknamePlayer2" HorizontalAlignment="Left" Height="45" Margin="380,102,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="241" Text="Nickname" GotKeyboardFocus="TBNicknamePlayer2_GotKeyboardFocus" LostKeyboardFocus="TBNicknamePlayer2_LostKeyboardFocus" FontSize="20"/>
+        <xctk:ColorPicker x:Name="ColorPlayer2" Margin="341,159,27.8,0" Height="89" VerticalAlignment="Top" SelectedColorChanged="ColorPlayer2_SelectedColorChanged"/>
+        <xctk:ColorPicker x:Name="ColorPlayer1" Margin="34,159,333.8,0" Height="89" VerticalAlignment="Top" SelectedColorChanged="ColorPlayer1_SelectedColorChanged"/>
+        <Button x:Name="BTN_Start" Content="Start the Game!" HorizontalAlignment="Left" Margin="34,269,0,0" VerticalAlignment="Top" Width="587" Height="44" Click="BTN_Start_Click" BorderBrush="Black"/>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="46" Margin="34,31,0,0" VerticalAlignment="Top" Width="281" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\player1.png"/>
+        <Image x:Name="image_Copy" HorizontalAlignment="Left" Height="46" Margin="335,0,-13.8,303" VerticalAlignment="Bottom" Width="325" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\player2.png"/>
+        <Image x:Name="image1" HorizontalAlignment="Left" Height="26" Margin="344,120,0,0" VerticalAlignment="Top" Width="26" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\user.png" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+        <Image x:Name="image1_Copy" HorizontalAlignment="Left" Height="26" Margin="39,121,0,0" VerticalAlignment="Top" Width="26" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\user.png" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+        <Rectangle x:Name="rectColor2" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="89" Margin="341,159,0,0" Stroke="Black" VerticalAlignment="Top" Width="255"/>
+        <Rectangle x:Name="rectColor1" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="89" Margin="34,159,0,0" Stroke="Black" VerticalAlignment="Top" Width="255"/>
     </Grid>
 </Window>

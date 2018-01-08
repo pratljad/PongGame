@@ -21,14 +21,17 @@ namespace Configuration
     public partial class MainWindow : Window
     {
         public bool opened = false;
+        public bool opened2 = false;
         public MainWindow()
         {
             InitializeComponent();
+            this.Background = Brushes.DarkSlateBlue;
+            WordFilter.init();
         }
 
         private void BTN_PlayervsPlayer_Click(object sender, RoutedEventArgs e)
         {
-            if (!opened)
+            if (!opened && !opened2)
             {
                 SettingsPP w = new SettingsPP(this);
                 w.Show();
@@ -42,6 +45,16 @@ namespace Configuration
             l.Show();
 
             this.Close();
+        }
+
+        private void BTN_PlayervsKI_Click(object sender, RoutedEventArgs e)
+        {
+            if (!opened && !opened2)
+            {
+                SettingsPKI w = new SettingsPKI(this);
+                w.Show();
+                opened2 = true;
+            }
         }
     }
 }

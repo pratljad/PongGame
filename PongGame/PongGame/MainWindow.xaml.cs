@@ -78,9 +78,14 @@ namespace PongGame
         Rectangle[] firstPlayerRectangles;
         Rectangle[] secondPlayerRectangles;
 
+        int mode = 0;
+
+        // Player vs Player
         public MainWindow(string nickname1, string nickname2, Color colorPlayer1, Color colorPlayer2)
         {
             InitializeComponent();
+
+            mode = 1;
 
             myGame = new Pong(this);
             isPlaying = false;
@@ -88,6 +93,25 @@ namespace PongGame
             initRectangleArrays();
             firstPlayer = new Player(nickname1, colorPlayer1);
             secondPlayer = new Player(nickname2, colorPlayer2);
+
+            setNicknameAndColor();
+
+            tt.Elapsed += new ElapsedEventHandler(_timer_Elapsed);
+            arduinoController = new ArduinoController("COM3");
+        }
+
+        public MainWindow(string nickname, Color colorPlayer)
+        {
+            InitializeComponent();
+
+            mode = 2;
+
+            myGame = new Pong(this);
+            isPlaying = false;
+
+            initRectangleArrays();
+            firstPlayer = new Player(nickname, colorPlayer);
+            secondPlayer = new Player("KI", colorPlayer);
 
             setNicknameAndColor();
 
@@ -327,11 +351,14 @@ namespace PongGame
             {
                 tt.Stop();
 
-                pongThreadBall.Abort();
-                arduinoGetDataAndMovingSliderThread.Abort();
+                if (pongThreadBall != null)     // otherwise exception occures if the game never started
+                {
+                    pongThreadBall.Abort();
+                    arduinoGetDataAndMovingSliderThread.Abort();
 
-                pongThreadPlayerOne.Abort();
-                pongThreadPlayerTwo.Abort();
+                    pongThreadPlayerOne.Abort();
+                    pongThreadPlayerTwo.Abort();
+                }
 
                 if (winner != -1)
                 {
@@ -353,13 +380,21 @@ namespace PongGame
                 player2.down = false;
 
                 arduinoGetDataAndMovingSliderThread = new Thread(myGame.readDataFromArduino);
-                pongThreadBall = new Thread(myGame.ballMove);
+
+                if (mode == 1)
+                    pongThreadBall = new Thread(myGame.ballMove);
+                else if (mode == 2)
+                    pongThreadBall = new Thread(myGame.ballMoveKI);
 
                 pongThreadPlayerOne = new Thread(myGame.runPlayerOneKeys);
-                pongThreadPlayerTwo = new Thread(myGame.runPlayerTwoKeys);
+
+                if (mode == 1)
+                    pongThreadPlayerTwo = new Thread(myGame.runPlayerTwoKeys);
+                else if (mode == 2)
+                    pongThreadPlayerTwo = new Thread(myGame.runKI);
                 //pongThreadPlayerOne = new Thread(myGame.runPlayerOne);
                 //pongThreadPlayerTwo = new Thread(myGame.runPlayerTwo);
-                
+
 
                 arduinoGetDataAndMovingSliderThread.Start();
                 pongThreadPlayerOne.Start();

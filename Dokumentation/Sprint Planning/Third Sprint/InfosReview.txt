@@ -1,5 +1,5 @@
 Ball wenn er "drüber ist" regeln mit linie oder ähnlichem - Philipp
-Nicknames Filter mit "Arschloch" + Duplikaten - Philipp
+WordFilter - Philipp
 UI Allgemein verschönern - Philipp
 Drall beim Ball mitgeben - Tician
 

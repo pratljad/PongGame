@@ -78,3 +78,7 @@ C:\Users\Dragan\Documents\Projects\PongGame\PongGame\obj\Debug\PongGame.Properti
 C:\Users\Dragan\Documents\Projects\PongGame\PongGame\obj\Debug\PongGame.csproj.GenerateResource.Cache
 C:\Users\Dragan\Documents\Projects\PongGame\PongGame\obj\Debug\PongGame.exe
 C:\Users\Dragan\Documents\Projects\PongGame\PongGame\obj\Debug\PongGame.pdb
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignColors.dll
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.dll
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.pdb
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.xml

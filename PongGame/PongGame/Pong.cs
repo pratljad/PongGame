@@ -20,12 +20,21 @@ namespace PongGame
         public bool directionisLeft = false;
         private int maxAngle = 50;
 
+        private bool directionChanged = false;
+        Random rnd = new Random();
+
+        int differenceTopBallSlider = 0;
 
         public Pong(MainWindow mw)
         {
             this.mw = mw;
             ballControl = new BallControl(mw.Ball, 5, 0);
-            
+
+            mw.Dispatcher.InvokeAsync(
+                         new Action(() =>
+                         {
+                             differenceTopBallSlider = Convert.ToInt32(Canvas.GetTop(mw.Ball)) - Convert.ToInt32(Canvas.GetTop(mw.Slider_Player1));
+                         }));
         }
 
         public void readDataFromArduino()
@@ -95,11 +104,134 @@ namespace PongGame
             }
         }
 
+        public int getRandomForKI()
+        {
+            return rnd.Next(1, 3);
+        }
+
+        public void runKI()
+        {
+            // If you want to change the "difficulty" of the KI, change distanceMidAndImpactingPoint, the higher the value is the bigger will be the angle of the ball
+
+            int distanceMidAndImpactingPoint = 35;
+
+            int rndNumber = getRandomForKI();           
+
+            int heightBall = 0;
+            int heightSlider = 0;
+
+            while (mw.getIsPlaying() && Thread.CurrentThread.ThreadState.Equals(ThreadState.Running))
+            {
+                Thread.Sleep(1);
+                
+                if (directionChanged == true)
+                {
+                    if (directionisLeft == false)
+                    {
+                        // Ball goes right
+                        rndNumber = getRandomForKI();
+                    }
+                    else if (directionisLeft == true)
+                    {
+                        // Ball goes left
+                        rndNumber = getRandomForKI();
+                    }
+
+                    directionChanged = false;
+                }
+
+                ballControl.ball.Dispatcher.InvokeAsync(
+                     new Action(() =>
+                     {
+                         heightBall = Convert.ToInt32(Canvas.GetTop(mw.Ball));
+                         mw.Dispatcher.InvokeAsync(
+                         new Action(() =>
+                         {
+                             heightSlider = Convert.ToInt32(Canvas.GetTop(mw.Slider_Player2));
+
+                             if(rndNumber == 1)
+                             {
+                                 if (heightSlider < (heightBall - differenceTopBallSlider) + distanceMidAndImpactingPoint)
+                                 {
+                                     sliderDownKI(mw.Slider_Player2);
+                                 }
+                                 else
+                                 {
+                                     sliderUpKI(mw.Slider_Player2);
+                                 }
+                             }
+                             else
+                             {
+                                 if (heightSlider < (heightBall - differenceTopBallSlider) - distanceMidAndImpactingPoint)
+                                 {
+                                     sliderDownKI(mw.Slider_Player2);
+                                 }
+                                 else
+                                 {
+                                     sliderUpKI(mw.Slider_Player2);
+                                 }
+                             }
+                         }));
+                     }));
+            }
+        }
+
         public void ballMove()
         {
             while (mw.getIsPlaying() && Thread.CurrentThread.ThreadState.Equals(ThreadState.Running))
             {
                 Thread.Sleep(10);
+                ballControl.ball.Dispatcher.InvokeAsync(
+                    new Action(() =>
+                    {
+                        if (mw.getIsPlaying() && Thread.CurrentThread.ThreadState.Equals(ThreadState.Running))
+                        {
+                            if (directionisLeft)
+                                moveBall(ref ballControl, mw.Slider_Player1);
+
+                            else
+                                moveBall(ref ballControl, mw.Slider_Player2);
+                        }
+                    })
+                    );
+            }
+        }
+
+        public void ballMoveKI()
+        {
+            // If you want to change the setting change threshSleep as the start speed an "sec % value" at which interval the speed should be increased
+
+            int threadSleep = 10;
+            int sec = 0;
+
+            bool sequenzDone = false;
+
+            while (mw.getIsPlaying() && Thread.CurrentThread.ThreadState.Equals(ThreadState.Running))
+            {
+                Thread.Sleep(threadSleep);
+
+                mw.Dispatcher.InvokeAsync(
+                    new Action(() =>
+                    {
+                        string[] split = Convert.ToString(mw.TF_Timer.Content).Split(':');
+
+                        sec = (Convert.ToInt32(split[0]) * 60) + Convert.ToInt32(split[1]);
+                        if(sec % 10 == 0)
+                        {
+                            if(sequenzDone == false)
+                            {
+                                if (threadSleep > 2)
+                                    threadSleep -= 1;
+
+                                sequenzDone = true;
+                            }
+                        }
+                        else
+                        {
+                            sequenzDone = false;
+                        }
+                    }));
+
                 ballControl.ball.Dispatcher.InvokeAsync(
                     new Action(() =>
                     {
@@ -150,6 +282,7 @@ namespace PongGame
                     ballControl.movingYDistance = getYAxisForBall(slider, ballControl.ball, ballControl.movingXDistance); 
 
                 directionisLeft = (directionisLeft) ? false : true;
+                directionChanged = true;
                 ballControl.movingXDistance *= -1;
                 
             }
@@ -186,6 +319,37 @@ namespace PongGame
             })
             );
         }
+
+        private void sliderUpKI(Rectangle slider)
+        {
+            slider.Dispatcher.InvokeAsync(
+            new Action(() =>
+            {
+                if (Canvas.GetTop(slider) >= 1)
+                    Canvas.SetTop(slider, Canvas.GetTop(slider) - 1);
+
+                else
+                    Canvas.SetTop(slider, 0);
+
+            })
+            );
+        }
+
+        private void sliderDownKI(Rectangle slider)
+        {
+            slider.Dispatcher.InvokeAsync(
+            new Action(() =>
+            {
+                if (Canvas.GetTop(slider) < (mw.Playground.Height - slider.Height - 1))
+                    Canvas.SetTop(slider, Canvas.GetTop(slider) + 1);
+
+                else
+                    Canvas.SetTop(slider, mw.Playground.Height - slider.Height);
+            })
+            );
+        }
+
+
 
         private double getYAxisForBall(Rectangle slider, Ellipse ball, int x)
         {
