@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, 'Pages')));
+app.use(express.static(path.join(__dirname, 'pages')));
 app.use(express.static(path.join(__dirname, 'styles')));
 app.use(express.static(path.join(__dirname, 'images')));
 
