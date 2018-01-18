@@ -216,7 +216,7 @@ namespace PongGame
                         string[] split = Convert.ToString(mw.TF_Timer.Content).Split(':');
 
                         sec = (Convert.ToInt32(split[0]) * 60) + Convert.ToInt32(split[1]);
-                        if(sec % 10 == 0)
+                        if(sec % 5 == 0)
                         {
                             if(sequenzDone == false)
                             {
