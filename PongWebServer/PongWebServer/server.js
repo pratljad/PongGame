@@ -1,4 +1,4 @@
-var express = require('express');
+    var express = require('express');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
@@ -15,9 +15,10 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'Pages')));
+app.use(express.static(path.join(__dirname, 'pages')));
 app.use(express.static(path.join(__dirname, 'styles')));
 app.use(express.static(path.join(__dirname, 'images')));
+app.use(express.static(path.join(__dirname, 'jsfiles')));
 app.get('/', function (req, res) {
     res.send("Hello World");
     res.end(200);
@@ -54,14 +55,11 @@ app.get('/leaderboard', function (req, res) {
         var queryPart = splitting.splitLeaderboardQuery(res, req.originalUrl);
         if (queryPart != null) {
             switch (queryPart) {
-                case 'mg':
-                    getLeaderboardRecords(res, "score");
+                case 'aivsp':
+                    getLeaderboardRecords(res, "playervsplayer");
                     break;
-                case 'mw':
-                    getLeaderboardRecords(res, "wins");
-                    break;
-                case 'ml':
-                    getLeaderboardRecords(res, "losses");
+                case 'pvsp':
+                    getLeaderboardRecords(res, "kivsplayer");
                     break;
             }
         }
@@ -108,20 +106,14 @@ var getLeaderboardRecords = function (res, category) {
         resStatus = 200;
         var db = client.db(dbName);
         switch (category) {
-            case "wins":
+            case "playervsplayer":
                 db.collection(tableName).find({}).sort({ wins: -1 }).toArray(function (err, allPlayers) {
                     res.status(resStatus).json(allPlayers);
                     res.end();
                 });
                 break;
-            case "losses":
+            case "kivsplayer":
                 db.collection(tableName).find({}).sort({ losses: -1 }).toArray(function (err, allPlayers) {
-                    res.status(resStatus).json(allPlayers);
-                    res.end();
-                });
-                break;
-            case "score":
-                db.collection(tableName).find({}).sort({ score: -1 }).toArray(function (err, allPlayers) {
                     res.status(resStatus).json(allPlayers);
                     res.end();
                 });
@@ -160,6 +152,7 @@ var setWinOrLossForPlayer = function (username, result) {
                         losses: 1
                     }
                 });
+                client.close();
                 break;
             case 1:
                 db.collection(tableName).update({ username: username }, {
@@ -167,9 +160,9 @@ var setWinOrLossForPlayer = function (username, result) {
                         wins: 1
                     }
                 });
+                client.close();
                 break;
         }
-        client.close();
     });
 };
 //# sourceMappingURL=server.js.map

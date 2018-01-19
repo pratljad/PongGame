@@ -21,9 +21,15 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, 'pages')));
+//app.use(express.static(path.join(__dirname, 'pages')));
 app.use(express.static(path.join(__dirname, 'styles')));
 app.use(express.static(path.join(__dirname, 'images')));
+app.use(express.static(path.join(__dirname, 'jsfiles')));
+
+app.get('/getData.js', function (req, res, next) {
+    console.log(__dirname);
+    return res.sendFile(__dirname + '/jsfiles/getData.js')
+});
 
 app.get('/', function (req, res) {
     res.send("Hello World");
