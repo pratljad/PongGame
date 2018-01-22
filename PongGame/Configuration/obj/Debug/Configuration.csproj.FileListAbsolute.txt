@@ -153,3 +153,6 @@ C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\SettingsPKI
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\SettingsPKI.baml
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\bin\Debug\WpfAnimatedGif.dll
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\bin\Debug\WpfAnimatedGif.xml
+C:\Users\User\Documents\GitHub\PongGame\PongGame\Configuration\bin\Debug\Configuration.exe.config
+C:\Users\User\Documents\GitHub\PongGame\PongGame\Configuration\obj\Debug\Configuration.exe
+C:\Users\User\Documents\GitHub\PongGame\PongGame\Configuration\obj\Debug\Configuration.pdb
