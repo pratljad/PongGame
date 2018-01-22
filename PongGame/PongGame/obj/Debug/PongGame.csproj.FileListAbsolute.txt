@@ -82,6 +82,7 @@ C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignCo
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.dll
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.pdb
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.xml
+<<<<<<< HEAD
 D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\bin\Debug\PongGame.exe.config
 D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\bin\Debug\PongGame.exe
 D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\bin\Debug\PongGame.pdb
@@ -122,3 +123,9 @@ D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\obj\Debug\MainWindow.baml
 D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\obj\Debug\PongGame.g.resources
 D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\obj\Debug\PongGame.Properties.Resources.resources
 D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\obj\Debug\PongGame.csproj.GenerateResource.Cache
+=======
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\WpfAnimatedGif.dll
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\WpfAnimatedGif.xml
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\obj\Debug\Congratulations.g.cs
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\obj\Debug\Congratulations.baml
+>>>>>>> de94b96f4b5a45c6c9c0d86259939b40c5ba5a14

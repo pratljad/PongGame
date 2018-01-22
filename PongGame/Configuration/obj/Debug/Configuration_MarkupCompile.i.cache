@@ -4,17 +4,30 @@
 winexe
 C#
 .cs
+<<<<<<< HEAD
 D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\Configuration\obj\Debug\
+=======
+C:\Users\User\Documents\GitHub\PongGame\PongGame\Configuration\obj\Debug\
+>>>>>>> de94b96f4b5a45c6c9c0d86259939b40c5ba5a14
 Configuration
 none
 false
 DEBUG;TRACE
+<<<<<<< HEAD
 D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\Configuration\App.xaml
 4-531844742
 
 141178583232
 241477909638
 Leaderboards.xaml;MainWindow.xaml;SettingsPKI.xaml;SettingsPP.xaml;
+=======
+C:\Users\User\Documents\GitHub\PongGame\PongGame\Configuration\App.xaml
+3193989380
+
+1362139127
+24-1531786094
+MainWindow.xaml;SettingsPKI.xaml;SettingsPP.xaml;
+>>>>>>> de94b96f4b5a45c6c9c0d86259939b40c5ba5a14
 
 True
 
