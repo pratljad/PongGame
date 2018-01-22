@@ -1,23 +1,35 @@
 ﻿var express = require('express');
 var app = express();
+var path = require('path');
 var bodyParser = require('body-parser');
 
 var mongodb = require('mongodb').MongoClient;
 var assert = require('assert');
-var url = 'mongodb://localhost:27017/PongDatabase';
-
+var url = 'mongodb://localhost:27017/';
 
 var Player = require('./Modules/Player.js');
 var splitting = require('./Modules/splitting.js');
-var exists;
+
 var resStatus = 200;
 var resMessage = "";
+var dbName = "PongDatabase";
+var tableName = "Players";
 
 app.use(bodyParser.urlencoded({
     extended: false
 }));
 
 app.use(bodyParser.json());
+
+//app.use(express.static(path.join(__dirname, 'pages')));
+app.use(express.static(path.join(__dirname, 'styles')));
+app.use(express.static(path.join(__dirname, 'images')));
+app.use(express.static(path.join(__dirname, 'jsfiles')));
+
+app.get('/getData.js', function (req, res, next) {
+    console.log(__dirname);
+    return res.sendFile(__dirname + '/jsfiles/getData.js')
+});
 
 app.get('/', function (req, res) {
     res.send("Hello World");
@@ -96,9 +108,9 @@ app.listen(3000, function () {
         mongodb.connect(url, function (err, client) {
             if (err) throw err;
 
-            var db = client.db('PongDatabase');
+            var db = client.db(dbName);
 
-            db.collection('Players').insert(player, function(insertErr, result) {
+            db.collection(tableName).insert(player, function(insertErr, result) {
                 if (insertErr) throw insertErr;
                 
             });
@@ -110,9 +122,8 @@ app.listen(3000, function () {
         mongodb.connect(url, function (err, client) {
             if (err) throw err;
 
-            var db = client.db('PongDatabase');
-            console.log(username + " in with " + scoreToIncrease + " points");
-            db.collection('Players').update({ username: username },
+            var db = client.db(dbName);
+            db.collection(tableName).update({ username: username },
                 {
                     $inc: { score: scoreToIncrease }
                 }
@@ -126,27 +137,28 @@ app.listen(3000, function () {
         mongodb.connect(url, function (err, client) {
             if (err) throw err;
 
-            var db = client.db('PongDatabase');
+            resStatus = 200;
+            var db = client.db(dbName);
 
             switch (category) {
                 case "wins":
-                    db.collection('Players').find({}).sort({ wins: -1 }).toArray(function (err, allPlayers) {
+                    db.collection(tableName).find({}).sort({ wins: -1 }).toArray(function (err, allPlayers) {
 
-                        res.status(200).json(allPlayers);
+                        res.status(resStatus).json(allPlayers);
                         res.end();
                     });
                     break;
                 case "losses":
-                    db.collection('Players').find({}).sort({ losses: -1 }).toArray(function (err, allPlayers) {
+                    db.collection(tableName).find({}).sort({ losses: -1 }).toArray(function (err, allPlayers) {
 
-                        res.status(200).json(allPlayers);
+                        res.status(resStatus).json(allPlayers);
                         res.end();
                     });
                     break;
                 case "score":
-                    db.collection('Players').find({}).sort({ score: -1 }).toArray(function (err, allPlayers) {
+                    db.collection(tableName).find({}).sort({ score: -1 }).toArray(function (err, allPlayers) {
 
-                        res.status(200).json(allPlayers);
+                        res.status(resStatus).json(allPlayers);
                         res.end();
                     });
                     break;
@@ -160,8 +172,8 @@ app.listen(3000, function () {
     var checkIfPlayerExists = function (username) {
         mongodb.connect(url, function (err, client) {
             if (err) throw err;
-            var db = client.db('PongDatabase');
-            var playerExists = db.collection('Players').findOne({ username: username }, function (err, user) {
+            var db = client.db(dbName);
+            var playerExists = db.collection(tableName).findOne({ username: username }, function (err, user) {
                 if (err) { throw err; }
 
                 if (user) {
@@ -179,10 +191,10 @@ app.listen(3000, function () {
         mongodb.connect(url, function (err, client) {
             if (err) throw err;
 
-            var db = client.db('PongDatabase');
+            var db = client.db(dbName);
             switch (result) {
                 case 0:
-                    db.collection('Players').update({ username: username },
+                    db.collection(tableName).update({ username: username },
                         {
                             $inc: {
                                 losses: 1
@@ -192,7 +204,7 @@ app.listen(3000, function () {
                     break;
 
                 case 1:
-                    db.collection('Players').update({ username: username },
+                    db.collection(tableName).update({ username: username },
                         {
                             $inc: {
                                 wins: 1
