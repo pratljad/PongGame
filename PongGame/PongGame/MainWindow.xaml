@@ -5,37 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PongGame"
         mc:Ignorable="d"
-        Title="PongGame" Height="686.103" Width="891.406" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp" Closed="Window_Closed" ResizeMode="NoResize">
+        Title="PongGame" Height="957.603" Width="1297.406" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp" Closed="Window_Closed" ResizeMode="NoResize">
     <Grid Background="#FF92BD8F">
-        <Canvas x:Name="Playground" HorizontalAlignment="Left" Height="565" Margin="9,10,0,0" VerticalAlignment="Top" Width="864" Background="#FFD1D1D1">
-            <Image x:Name="image" HorizontalAlignment="Left" Height="565" VerticalAlignment="Top" Width="854" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\pongField.jpg" Canvas.Left="10"/>
+        <Canvas x:Name="Playground" HorizontalAlignment="Left" Height="836" Margin="9,10,0,0" VerticalAlignment="Top" Width="1264" Background="#FFD1D1D1">
+            <Image x:Name="image" HorizontalAlignment="Left" Height="836" VerticalAlignment="Top" Width="1254" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\pongField.jpg" Canvas.Left="10"/>
 
-            <Ellipse x:Name="Ball" Fill="#FF058502" Height="30" Canvas.Left="415" Stroke="Black" Canvas.Top="268" Width="30"/>
+            <Ellipse x:Name="Ball" Fill="#FF058502" Height="30" Canvas.Left="619" Stroke="Black" Canvas.Top="418" Width="30"/>
         </Canvas>
 
-        <Canvas x:Name="Playground_Slider1" HorizontalAlignment="Left" Height="565" Margin="9,10,0,0" VerticalAlignment="Top" Width="25" Background="#FFD1D1D1">
-            <Image x:Name="imageLeft" HorizontalAlignment="Left" Height="565" VerticalAlignment="Top" Width="27" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\pongFieldLeft.jpg" Canvas.Left="0" Stretch="Fill"/>
+        <Canvas x:Name="Playground_Slider1" HorizontalAlignment="Left" Height="836" Margin="9,10,0,0" VerticalAlignment="Top" Width="34" Background="#FFD1D1D1">
+            <Image x:Name="imageLeft" HorizontalAlignment="Left" Height="836" VerticalAlignment="Top" Width="45" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\pongFieldLeft.jpg" Canvas.Left="0" Stretch="Fill"/>
 
-            <Rectangle x:Name="Slider_Player1" Fill="#FFFF2300" Height="100" Stroke="Black" Canvas.Top="227" Width="25"/>
+            <Rectangle x:Name="Slider_Player1" Fill="#FFFF2300" Height="150" Stroke="Black" Canvas.Top="358" Width="43"/>
         </Canvas>
-        <Canvas x:Name="Playground_Slider2" Height="565" Margin="849,10,10.8,0" VerticalAlignment="Top" Background="#FFD1D1D1" Width="25">
-            <Image x:Name="imageRight" HorizontalAlignment="Left" Height="565" VerticalAlignment="Top" Width="27" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\pongFieldRight.jpg" Canvas.Left="0" Stretch="Fill"/>
+        <Canvas x:Name="Playground_Slider2" Height="836" Margin="1239,10,70,0" VerticalAlignment="Top" Background="#FFD1D1D1" Width="34">
+            <Image x:Name="imageRight" HorizontalAlignment="Left" Height="836" VerticalAlignment="Top" Width="40" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\pongFieldRight.jpg" Stretch="Fill" Canvas.Left="-6"/>
 
 
-            <Rectangle x:Name="Slider_Player2" Fill="#FFFF2300" Height="100" Stroke="Black" Canvas.Top="232" Width="25"/>
+            <Rectangle x:Name="Slider_Player2" Fill="#FFFF2300" Height="150" Stroke="Black" Canvas.Top="370" Width="40" Canvas.Left="-6"/>
         </Canvas>
-        <Label x:Name="TF_Nickname1" Content="Player1" HorizontalAlignment="Left" Margin="12,588,0,0" VerticalAlignment="Top" Height="50" Width="200" FontSize="27" FontFamily="Magneto"/>
-        <Label x:Name="TF_Nickname2" Content="Player2" Margin="677,588,0,0" VerticalAlignment="Top" Height="50" Width="198" FontSize="27" FontFamily="Magneto" HorizontalContentAlignment="Right" HorizontalAlignment="Left"/>
-        <Rectangle x:Name="p1p1" Fill="White" HorizontalAlignment="Left" Height="30" Margin="386,600,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
-        <Rectangle x:Name="p1p2" Fill="White" HorizontalAlignment="Left" Height="30" Margin="351,600,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
-        <Rectangle x:Name="p1p3" Fill="White" HorizontalAlignment="Left" Height="30" Margin="316,600,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
-        <Rectangle x:Name="p1p4" Fill="White" HorizontalAlignment="Left" Height="30" Margin="281,600,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
-        <Rectangle x:Name="p1p5" Fill="White" HorizontalAlignment="Left" Height="30" Margin="246,600,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
-        <Rectangle x:Name="p2p1" Fill="White" HorizontalAlignment="Left" Height="30" Margin="478,600,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
-        <Rectangle x:Name="p2p2" Fill="White" HorizontalAlignment="Left" Height="30" Margin="513,600,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
-        <Rectangle x:Name="p2p3" Fill="White" HorizontalAlignment="Left" Height="30" Margin="548,600,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
-        <Rectangle x:Name="p2p4" Fill="White" HorizontalAlignment="Left" Height="30" Margin="583,600,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
-        <Rectangle x:Name="p2p5" Fill="White" HorizontalAlignment="Left" Height="30" Margin="618,600,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
-        <Label x:Name="TF_Timer" Content="00:00" HorizontalAlignment="Left" Margin="421,600,0,0" VerticalAlignment="Top" Height="30" Width="52" FontSize="16"/>
+        <Label x:Name="TF_Nickname1" Content="Player1" HorizontalAlignment="Left" Margin="24,864,0,0" VerticalAlignment="Top" Height="50" Width="200" FontSize="27" FontFamily="Magneto"/>
+        <Label x:Name="TF_Nickname2" Content="Player2" Margin="1051,864,0,0" VerticalAlignment="Top" Height="50" Width="198" FontSize="27" FontFamily="Magneto" HorizontalContentAlignment="Right" HorizontalAlignment="Left"/>
+        <Rectangle x:Name="p1p1" Fill="White" HorizontalAlignment="Left" Height="30" Margin="582,871,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p1p2" Fill="White" HorizontalAlignment="Left" Height="30" Margin="547,871,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p1p3" Fill="White" HorizontalAlignment="Left" Height="30" Margin="512,871,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p1p4" Fill="White" HorizontalAlignment="Left" Height="30" Margin="477,871,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p1p5" Fill="White" HorizontalAlignment="Left" Height="30" Margin="442,871,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p2p1" Fill="White" HorizontalAlignment="Left" Height="30" Margin="674,871,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p2p2" Fill="White" HorizontalAlignment="Left" Height="30" Margin="709,871,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p2p3" Fill="White" HorizontalAlignment="Left" Height="30" Margin="744,871,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p2p4" Fill="White" HorizontalAlignment="Left" Height="30" Margin="779,871,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Rectangle x:Name="p2p5" Fill="White" HorizontalAlignment="Left" Height="30" Margin="814,871,0,0" Stroke="Black" VerticalAlignment="Top" Width="30"/>
+        <Label x:Name="TF_Timer" Content="00:00" HorizontalAlignment="Left" Margin="617,871,0,0" VerticalAlignment="Top" Height="30" Width="52" FontSize="16"/>
     </Grid>
 </Window>

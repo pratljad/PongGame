@@ -93,17 +93,10 @@
       <DependentUpon>SettingsPKI.xaml</DependentUpon>
     </Compile>
     <Compile Include="User.cs" />
-    <Compile Include="Leaderboards.xaml.cs">
-      <DependentUpon>Leaderboards.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SettingsPP.xaml.cs">
       <DependentUpon>SettingsPP.xaml</DependentUpon>
     </Compile>
     <Compile Include="WordFilter.cs" />
-    <Page Include="Leaderboards.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

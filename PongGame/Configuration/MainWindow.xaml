@@ -13,9 +13,9 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:local="clr-namespace:Configuration"
         mc:Ignorable="d"
-        Title="MainWindow" Height="596.148" Width="566.857">
+        Title="MainWindow" Height="531.648" Width="566.857">
     <Grid>
-        <Rectangle Fill="White" Height="530" Margin="16,16,16,0" Stroke="White" VerticalAlignment="Top"/>
+        <Rectangle Fill="White" Height="460" Margin="16,16,16,0" Stroke="White" VerticalAlignment="Top"/>
 
         <materialDesign:Card Padding="30" Margin="16" Background="#FF5C6393">
             <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" HorizontalAlignment="Center" FontSize="25" FontFamily="Magneto">Pong Game</TextBlock>
@@ -23,7 +23,6 @@
 
         <Button x:Name="BTN_PlayervsPlayer" Content="Player VS Player" HorizontalAlignment="Left" Margin="36,143,0,0" VerticalAlignment="Top" Width="483" Height="149" Click="BTN_PlayervsPlayer_Click" FontSize="25" Background="Black" FontFamily="Magneto" BorderBrush="Black"/>
         <Button x:Name="BTN_PlayervsKI" Content="Player VS Computer" HorizontalAlignment="Left" Margin="36,304,0,0" VerticalAlignment="Top" Width="483" Height="149" Background="Black" BorderBrush="Black" FontFamily="Magneto" FontSize="25" Click="BTN_PlayervsKI_Click"/>
-        <Button x:Name="BTN_Leaderboard" Content="Leaderboards" HorizontalAlignment="Left" Margin="36,481,0,0" VerticalAlignment="Top" Width="483" Height="56" Click="BTN_Leaderboard_Click" Background="Black"/>
         <Image x:Name="image" HorizontalAlignment="Left" Height="149" Margin="56,143,0,0" VerticalAlignment="Top" Width="112" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\goku.png"/>
         <Image x:Name="image1" HorizontalAlignment="Left" Height="149" Margin="424,143,0,0" VerticalAlignment="Top" Width="62" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\chara.png"/>
         <Image x:Name="image2" HorizontalAlignment="Left" Height="100" Margin="373,699,0,-315.8" VerticalAlignment="Top" Width="100"/>

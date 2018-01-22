@@ -32,12 +32,25 @@ namespace PongGame
         public Ellipse ball;
         public double movingYDistance;
         public int movingXDistance;
+        public int width;
+        public int height;
+        public int sleepingTime;
+        public double currentXPosition;
+        public double currentYPosition;
+        public SolidColorBrush color;
 
-        public BallControl(Ellipse ball, int movingXDistance, double movingYDistance)
+        public BallControl(Ellipse ball, double currentXPosition, double currentYPosition, int movingXDistance, double movingYDistance, int sleepingTime, SolidColorBrush color)
         {
             this.ball = ball;
+            this.currentXPosition = currentXPosition;
+            this.currentYPosition = currentYPosition;
             this.movingXDistance = movingXDistance;
             this.movingYDistance = movingYDistance;
+            this.sleepingTime = sleepingTime;
+            width = 30;
+            height = 30;
+
+            this.color = color;
         }
     }
 
@@ -53,6 +66,7 @@ namespace PongGame
     public partial class MainWindow : Window
     {
         Pong myGame;
+       
 
         Thread pongThreadBall;
         Thread arduinoGetDataAndMovingSliderThread;
@@ -85,9 +99,12 @@ namespace PongGame
         {
             InitializeComponent();
 
+            resetPositions();
+
             mode = 1;
 
             myGame = new Pong(this);
+            myGame.setBallInMiddleOfPlayground();
             isPlaying = false;
 
             initRectangleArrays();
@@ -104,6 +121,8 @@ namespace PongGame
         {
             InitializeComponent();
 
+            resetPositions();
+
             mode = 2;
 
             myGame = new Pong(this);
@@ -114,9 +133,32 @@ namespace PongGame
             secondPlayer = new Player("KI", colorPlayer);
 
             setNicknameAndColor();
+            setVisible();
 
             tt.Elapsed += new ElapsedEventHandler(_timer_Elapsed);
             arduinoController = new ArduinoController("COM3");
+            
+        }
+
+        private void setVisible()
+        {
+            p1p1.Visibility = Visibility.Hidden;
+            p1p2.Visibility = Visibility.Hidden;
+            p1p3.Visibility = Visibility.Hidden;
+            p1p4.Visibility = Visibility.Hidden;
+            p1p5.Visibility = Visibility.Hidden;
+            p2p2.Visibility = Visibility.Hidden;
+            p2p3.Visibility = Visibility.Hidden;
+            p2p4.Visibility = Visibility.Hidden;
+            p2p5.Visibility = Visibility.Hidden;
+        }
+
+        private void resetPositions()
+        {
+            Canvas.SetTop(Slider_Player1, (Playground_Slider1.Height / 2) - (Slider_Player1.Height) / 2);
+            Canvas.SetTop(Slider_Player2, (Playground_Slider2.Height / 2) - (Slider_Player2.Height) / 2);
+            Canvas.SetTop(Ball, (Playground.Height / 2) - (Ball.Height) / 2);
+            Canvas.SetLeft(Ball, (Playground.Width / 2) - (Ball.Width / 2));
         }
 
         private void initRectangleArrays()
@@ -213,30 +255,46 @@ namespace PongGame
             switch (player.getPoints())
             {
                 case 0:
-                    playerRectangles[0].Fill = new SolidColorBrush(player.getColor());
-                    player.addPoints();
+                    if(mode == 2)
+                    {
+                        Congratulations wi = new Congratulations(this);
+                        wi.Show();
+                        player.addPoints();
+                        resetPositions();
+                    }
+                    else
+                    {
+                        playerRectangles[0].Fill = new SolidColorBrush(player.getColor());
+                        player.addPoints();
+                        resetPositions();
+                    }
                     break;
                 case 1:
                     playerRectangles[1].Fill = new SolidColorBrush(player.getColor());
                     player.addPoints();
+                    resetPositions();
                     break;
                 case 2:
                     playerRectangles[2].Fill = new SolidColorBrush(player.getColor());
                     player.addPoints();
+                    resetPositions();
                     break;
                 case 3:
                     playerRectangles[3].Fill = new SolidColorBrush(player.getColor());
                     player.addPoints();
+                    resetPositions();
                     break;
                 case 4:
                     playerRectangles[4].Fill = new SolidColorBrush(player.getColor());
                     player.addPoints();
                     player.playerWon();
-                    
+                    resetPositions();
 
-                    MessageBox.Show("Player: " + player.getNickname() + " has won!! Congratulations!");
-                    addStatisticsToWebserver();
-                    reset();
+                    Congratulations w = new Congratulations(this);
+                    w.Show();
+
+                    //addStatisticsToWebserver();
+
                     break;
             }
         }
@@ -350,7 +408,7 @@ namespace PongGame
             if (!isPlaying)
             {
                 tt.Stop();
-
+                myGame.stopPopUpTimer();
                 if (pongThreadBall != null)     // otherwise exception occures if the game never started
                 {
                     pongThreadBall.Abort();
@@ -362,6 +420,8 @@ namespace PongGame
 
                 if (winner != -1)
                 {
+                    myGame.stopPopUpThreads();
+
                     if (winner == 1)
                         addPoint(1);
 
@@ -396,10 +456,13 @@ namespace PongGame
                 //pongThreadPlayerTwo = new Thread(myGame.runPlayerTwo);
 
 
+                myGame.resetPlaygroud();
+
                 arduinoGetDataAndMovingSliderThread.Start();
                 pongThreadPlayerOne.Start();
                 pongThreadPlayerTwo.Start();
                 pongThreadBall.Start();
+                myGame.startPopUpTimer();
             }
         }
 
@@ -428,7 +491,7 @@ namespace PongGame
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            setIsPlaying(false);
+            setIsPlaying(false);            
         }
     }
 }
