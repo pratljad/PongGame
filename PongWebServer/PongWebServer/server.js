@@ -10,7 +10,8 @@ var splitting = require('./Modules/splitting.js');
 var resStatus = 200;
 var resMessage = "";
 var dbName = "PongDatabase";
-var tableName = "Players";
+var tableNamePlayers = "Players";
+var tableNameKI = "KIVSP";
 app.use(bodyParser.urlencoded({
     extended: false
 }));
@@ -29,12 +30,36 @@ app.post('/addscore', function (req, res) {
             var usernames = req.body.Usernames;
             var scores = req.body.Scores;
             var results = req.body.Results;
-            checkIfPlayerExists(usernames[0]);
-            checkIfPlayerExists(usernames[1]);
+            checkIfPlayerExists(usernames[0], tableNamePlayers);
+            checkIfPlayerExists(usernames[1], tableNamePlayers);
             addPlayerScore(usernames[0], scores[0]);
             addPlayerScore(usernames[1], scores[1]);
             setWinOrLossForPlayer(usernames[0], results[0]);
             setWinOrLossForPlayer(usernames[1], results[1]);
+            resStatus = 200;
+            resMessage = "Everything went fine";
+        }
+        else {
+            resStatus = 404;
+            resMessage = "No information in body recieved.";
+        }
+    }
+    catch (err) {
+        console.error("Error occured: " + err);
+    }
+    res.send(resMessage);
+    res.end(resStatus);
+});
+
+app.post('/addkiscore', function (req, res) {
+    try {
+        if (req.body != undefined) {
+            var usernames = req.body.Username;
+            var times = req.body.Time;
+            checkIfPlayerExists(usernames[0], tableNameKI);
+            checkIfPlayerExists(usernames[1], tableNameKI);
+            setKITime(usernames[0], times[0]);
+            setKITime(usernames[1], times[1]);
             resStatus = 200;
             resMessage = "Everything went fine";
         }
@@ -55,10 +80,10 @@ app.get('/leaderboard', function (req, res) {
         var queryPart = splitting.splitLeaderboardQuery(res, req.originalUrl);
         if (queryPart != null) {
             switch (queryPart) {
-                case 'aivsp':
+                case 'pvsp':
                     getLeaderboardRecords(res, "playervsplayer");
                     break;
-                case 'pvsp':
+                case 'aivsp':
                     getLeaderboardRecords(res, "kivsplayer");
                     break;
             }
@@ -81,7 +106,7 @@ var insertPlayer = function (player) {
         if (err)
             throw err;
         var db = client.db(dbName);
-        db.collection(tableName).insert(player, function (insertErr, result) {
+        db.collection(tableNamePlayers).insert(player, function (insertErr, result) {
             if (insertErr)
                 throw insertErr;
         });
@@ -93,12 +118,25 @@ var addPlayerScore = function (username, scoreToIncrease) {
         if (err)
             throw err;
         var db = client.db(dbName);
-        db.collection(tableName).update({ username: username }, {
+        db.collection(tableNamePlayers).update({ username: username }, {
             $inc: { score: scoreToIncrease }
         });
         client.close();
     });
 };
+
+var setKITime = function (username, _time) {
+    mongodb.connect(url, function (err, client) {
+        if (err)
+            throw err;
+        var db = client.db(dbName);
+        db.collection(tableNameKI).update({ username: username }, {
+            $set: { time: _time }
+        });
+        client.close();
+    });
+};
+
 var getLeaderboardRecords = function (res, category) {
     mongodb.connect(url, function (err, client) {
         if (err)
@@ -107,13 +145,13 @@ var getLeaderboardRecords = function (res, category) {
         var db = client.db(dbName);
         switch (category) {
             case "playervsplayer":
-                db.collection(tableName).find({}).sort({ wins: -1 }).toArray(function (err, allPlayers) {
+                db.collection(tableNamePlayers).find({}).sort({ wins: -1 }).toArray(function (err, allPlayers) {
                     res.status(resStatus).json(allPlayers);
                     res.end();
                 });
                 break;
             case "kivsplayer":
-                db.collection(tableName).find({}).sort({ losses: -1 }).toArray(function (err, allPlayers) {
+                db.collection(tableNameKI).find({}).sort({ time: -1 }).toArray(function (err, allPlayers) {
                     res.status(resStatus).json(allPlayers);
                     res.end();
                 });
@@ -122,7 +160,7 @@ var getLeaderboardRecords = function (res, category) {
         client.close();
     });
 };
-var checkIfPlayerExists = function (username) {
+var checkIfPlayerExists = function (username, tableName) {
     mongodb.connect(url, function (err, client) {
         if (err)
             throw err;
@@ -147,7 +185,7 @@ var setWinOrLossForPlayer = function (username, result) {
         var db = client.db(dbName);
         switch (result) {
             case 0:
-                db.collection(tableName).update({ username: username }, {
+                db.collection(tableNamePlayers).update({ username: username }, {
                     $inc: {
                         losses: 1
                     }
@@ -155,7 +193,7 @@ var setWinOrLossForPlayer = function (username, result) {
                 client.close();
                 break;
             case 1:
-                db.collection(tableName).update({ username: username }, {
+                db.collection(tableNamePlayers).update({ username: username }, {
                     $inc: {
                         wins: 1
                     }

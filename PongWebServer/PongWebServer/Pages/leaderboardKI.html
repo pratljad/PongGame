@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="./getData.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
-<body>
+<body onload="getCurrentLeaderboardStatus(getCategory());">
     <nav class="navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -25,92 +27,7 @@
             
         </div>
         <table class="points_table">
-            <thead>
-                <tr>
-                    <th class="col-md-4">Rank</th>
-                    <th class="col-md-4">User</th>
-                    <th class="col-md-4">Time Played</th>
-
-                </tr>
-            </thead>
-            <tbody class="points_table_scrollbar">
-                <tr class="odd">
-                    <td class="col-md-4">1</td>
-                    <td class="col-md-4">Hans10</td>
-                    <td class="col-md-4">1</td>
-                </tr>
-                <tr class="even">
-                    <td class="col-md-4">1</td>
-                    <td class="col-md-4">Hans11</td>
-                    <td class="col-md-4">1</td>
-                </tr>
-
-                <tr class="odd">
-                    <td class="col-md-4">1</td>
-                    <td class="col-md-4">Hans12</td>
-                    <td class="col-md-4">1</td>
-                </tr>
-                <tr class="even">
-                    <td class="col-md-4">1</td>
-                    <td class="col-md-4">Hans13</td>
-                    <td class="col-md-4">1</td>
-                </tr>
-                <tr class="odd">
-                    <td class="col-md-4">1</td>
-                    <td class="col-md-4">Hans10</td>
-                    <td class="col-md-4">1</td>
-                </tr>
-                <tr class="even">
-                    <td class="col-md-4">1</td>
-                    <td class="col-md-4">Hans11</td>
-                    <td class="col-md-4">1</td>
-                </tr>
-                <tr class="odd">
-                    <td class="col-md-4">1</td>
-                    <td class="col-md-4">Hans12</td>
-                    <td class="col-md-4">1</td>
-                </tr>
-                <tr class="even">
-                    <td class="col-md-4">1</td>
-                    <td class="col-md-4">Hans13</td>
-                    <td class="col-md-4">1</td>
-                </tr>
-                <tr class="odd">
-                    <td class="col-md-4">1</td>
-                    <td class="col-md-4">Hans10</td>
-                    <td class="col-md-4">1</td>
-                </tr>
-                <tr class="odd">
-                    <td class="col-md-4">1</td>
-                    <td class="col-md-4">Hans12</td>
-                    <td class="col-md-4">1</td>
-                </tr>
-                <tr class="even">
-                    <td class="col-md-4">1</td>
-                    <td class="col-md-4">Hans13</td>
-                    <td class="col-md-4">1</td>
-                </tr>
-                <tr class="odd">
-                    <td class="col-md-4">1</td>
-                    <td class="col-md-4">Hans10</td>
-                    <td class="col-md-4">1</td>
-                </tr>
-                <tr class="odd">
-                    <td class="col-md-4">1</td>
-                    <td class="col-md-4">Hans12</td>
-                    <td class="col-md-4">1</td>
-                </tr>
-                <tr class="even">
-                    <td class="col-md-4">1</td>
-                    <td class="col-md-4">Hans13</td>
-                    <td class="col-md-4">1</td>
-                </tr>
-                <tr class="odd">
-                    <td class="col-md-4">1</td>
-                    <td class="col-md-4">Hans10</td>
-                    <td class="col-md-4">1</td>
-                </tr>
-            </tbody>
+           
         </table>
     </div>
     </body>
