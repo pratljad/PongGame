@@ -39,14 +39,6 @@ namespace Configuration
             }
         }
 
-        private void BTN_Leaderboard_Click(object sender, RoutedEventArgs e)
-        {
-            Leaderboards l = new Leaderboards();
-            l.Show();
-
-            this.Close();
-        }
-
         private void BTN_PlayervsKI_Click(object sender, RoutedEventArgs e)
         {
             if (!opened && !opened2)

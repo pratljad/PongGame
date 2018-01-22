@@ -138,14 +138,12 @@ C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\bin\Debug\ru\Xceed.Wp
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\Configuration.csprojResolveAssemblyReference.cache
-C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\Leaderboards.g.cs
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\MainWindow.g.cs
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\SettingsPP.g.cs
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\App.g.cs
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\Configuration_MarkupCompile.cache
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\Configuration_MarkupCompile.lref
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\App.baml
-C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\Leaderboards.baml
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\MainWindow.baml
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\SettingsPP.baml
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\Configuration.g.resources
@@ -153,3 +151,5 @@ C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\Configurati
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\Configuration.csproj.GenerateResource.Cache
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\SettingsPKI.g.cs
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\obj\Debug\SettingsPKI.baml
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\bin\Debug\WpfAnimatedGif.dll
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Configuration\bin\Debug\WpfAnimatedGif.xml

@@ -40,8 +40,9 @@ namespace Configuration
                 {
                     if (!(WordFilter.filter.Contains(TBNicknamePlayer.Text)))
                     {
-                        PongGame.MainWindow pg = new PongGame.MainWindow(TBNicknamePlayer.Text, (Color)ColorPlayer.SelectedColor);
                         this.Close();
+
+                        PongGame.MainWindow pg = new PongGame.MainWindow(TBNicknamePlayer.Text, (Color)ColorPlayer.SelectedColor);
                         pg.Show();
                     }
                     else

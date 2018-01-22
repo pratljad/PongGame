@@ -82,3 +82,7 @@ C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignCo
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.dll
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.pdb
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.xml
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\WpfAnimatedGif.dll
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\WpfAnimatedGif.xml
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\obj\Debug\Congratulations.g.cs
+C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\obj\Debug\Congratulations.baml
