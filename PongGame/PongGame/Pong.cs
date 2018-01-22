@@ -7,34 +7,471 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace PongGame
 {
+    public struct PopUp
+    {
+        public UIElement element;
+        public int id;
+        public double xCooardinate; //position in Canvas X
+        public double yCooardinate; //position in Canvas Y
+        public double height;       //height of element
+        public double width;        //width of element
+
+        public PopUp(UIElement element, int id, double xCooardinate, double yCooardinate, double height, double width)
+        {
+            this.element = element;
+            this.id = id;
+            this.xCooardinate = xCooardinate;
+            this.yCooardinate = yCooardinate;
+            this.height = height;
+            this.width = width;
+        }
+    }
+
+    public struct PopUpArea
+    {
+        public double minXCooardinate;
+        public double maxXCooardinate;
+        public double minYCooardinate;
+        public double maxYCooardinate;
+
+        public PopUpArea(double minXCooardinate, double maxXCooardinate, double minYCooardinate, double maxYCooardinate)
+        {
+            this.minXCooardinate = minXCooardinate;
+            this.maxXCooardinate = maxXCooardinate;
+            this.minYCooardinate = minYCooardinate;
+            this.maxYCooardinate = maxYCooardinate;
+        }
+    }
+
     public class Pong
     {
         private MainWindow mw;
         private BallControl ballControl;
+        private PopUpArea popUpAreaBorders;
+
+        private Thread popUpCreationThread;
+        private Thread collisionThread;
 
         public bool directionisLeft = false;
         private int maxAngle = 50;
 
         private bool directionChanged = false;
-        Random rnd = new Random();
+        private Random rnd = new Random();
 
-        int differenceTopBallSlider = 0;
+        private int differenceTopBallSlider = 0;
+        private string path = "../../../Images/";
+
+        private int popUpCreationDelay = 10;
+        private int popUpActiveTime = 4000;
+        private List<PopUp> popUps;
+        private int maxPopUps = 45;
+        private int popUpSize = 20;
+        private List<Thread> popUpThreads;
+        private int threadCounter = 0;
 
         public Pong(MainWindow mw)
         {
             this.mw = mw;
-            ballControl = new BallControl(mw.Ball, 5, 0);
+            ballControl = new BallControl(
+                mw.Ball,
+                mw.Playground.Width / 2,
+                mw.Playground.Height / 2,
+                5, 0, 10, Brushes.Red);
+            mw.Ball.Fill = ballControl.color;
+
+            popUpAreaBorders = new PopUpArea(
+                mw.Playground.Width / 4,                        //left
+                mw.Playground.Width - mw.Playground.Width / 4,  //right
+                0,                                              //top
+                mw.Playground.Height);                          //bottom
 
             mw.Dispatcher.InvokeAsync(
                          new Action(() =>
                          {
                              differenceTopBallSlider = Convert.ToInt32(Canvas.GetTop(mw.Ball)) - Convert.ToInt32(Canvas.GetTop(mw.Slider_Player1));
                          }));
+
+            popUps = new List<PopUp>();
+            popUpThreads = new List<Thread>();
+            popUpCreationThread = new Thread(createPopUp);
+            collisionThread = new Thread(checkCollision);
+        }
+
+        private void createPopUp()
+        {
+            bool sleep = true;
+            while (mw.getIsPlaying() && Thread.CurrentThread.ThreadState.Equals(ThreadState.Running))
+            {
+                if (sleep)
+                    Thread.Sleep(popUpCreationDelay);
+
+                else
+                    Thread.Sleep(30);
+
+                //pop up can be createt and ball is not in the ground where pop up can be created.
+                if (popUps.Count < maxPopUps &&
+                    (ballControl.currentXPosition - ballControl.width / 2 < popUpAreaBorders.minXCooardinate ||
+                    ballControl.currentXPosition - ballControl.width / 2 > popUpAreaBorders.maxXCooardinate))
+                {
+                    createNewPopUp();
+                    sleep = true;
+                }
+                else
+                    sleep = false;
+            }
+        }
+
+        private void createNewPopUp()
+        {
+            Application.Current.Dispatcher.InvokeAsync(
+            new Action(() =>
+            {
+                PopUp newPopUpElement;
+                UIElement element = getUIElement();
+                newPopUpElement = new PopUp(element, 1, -1, -1, ((Ellipse)(element)).Height, ((Ellipse)(element)).Width);
+                setRandomImageAndId(ref newPopUpElement);
+                drawPopUpOnCanvas(newPopUpElement);
+            })
+            );
+        }
+
+        private UIElement getUIElement()
+        {
+            Ellipse element = new Ellipse();
+            element.Stroke = Brushes.Black;
+            ImageBrush img = new ImageBrush();
+            element.HorizontalAlignment = HorizontalAlignment.Left;
+            element.VerticalAlignment = VerticalAlignment.Center;
+            element.Height = popUpSize;
+            element.Width = popUpSize;
+
+            return element;
+        }
+
+        private void setRandomImageAndId(ref PopUp item)
+        {
+            ImageBrush img = new ImageBrush();
+            int id = rnd.Next(1, 5);
+
+            switch (id)
+            {
+                //bigger
+                case 1:
+                    id = rnd.Next(1, 3);
+                    switch (id)
+                    {
+                        case 1: //i get bigger
+                            img.ImageSource = new BitmapImage(new Uri(path + "GreenPlus.jpg", UriKind.Relative));
+                            item.id = 1;
+                            break;
+                        case 2: //opponent get bigger
+                            img.ImageSource = new BitmapImage(new Uri(path + "RedPlus.jpg", UriKind.Relative));
+                            item.id = 2;
+                            break;
+                    }
+                    break;
+                //smaller
+                case 2:
+                    id = rnd.Next(1, 3);
+                    switch (id)
+                    {
+                        case 1: //opponent get smaller
+                            img.ImageSource = new BitmapImage(new Uri(path + "GreenMinus.jpg", UriKind.Relative));
+                            item.id = 3;
+                            break;
+                        case 2: //i get smaller
+                            img.ImageSource = new BitmapImage(new Uri(path + "RedMinus.jpg", UriKind.Relative));
+                            item.id = 4;
+                            break;
+                    }
+                    break;
+                //ball
+                case 3:
+                    id = rnd.Next(1, 3);
+                    switch (id)
+                    {
+                        case 1:
+                            img.ImageSource = new BitmapImage(new Uri(path + "BallFaster.jpg", UriKind.Relative));
+                            item.id = 5;
+                            break;
+                        case 2:
+                            img.ImageSource = new BitmapImage(new Uri(path + "BallSlower.jpg", UriKind.Relative));
+                            item.id = 6;
+                            break;
+                    }
+                    break;
+                //special
+                case 4:
+                    id = rnd.Next(1, 3);
+                    switch (id)
+                    {
+                        case 1:
+                            img.ImageSource = new BitmapImage(new Uri(path + "Clear.jpg", UriKind.Relative));
+                            item.id = 7;
+                            break;
+                        case 2:
+                            img.ImageSource = new BitmapImage(new Uri(path + "Questionmark.jpg", UriKind.Relative));
+                            item.id = 8;
+                            break;
+                    }
+                    break;
+            }
+
+            ((Ellipse)item.element).Fill = img;
+        }
+
+        private void drawPopUpOnCanvas(PopUp item)
+        {
+            double positionX;
+            double positionY;
+
+            do
+            {
+                positionX = getRandomXCooardinate(item);
+                positionY = getRandomYCooardinate(item);
+            } while (checkPopUpOnPosition(positionX, positionY));
+
+            item.xCooardinate = positionX;
+            item.yCooardinate = positionY;
+
+            lock (popUps)
+                popUps.Add(item);
+            mw.Playground.Children.Add(item.element);
+            Canvas.SetTop(item.element, item.yCooardinate);
+            Canvas.SetLeft(item.element, item.xCooardinate);
+        }
+
+        private double getRandomXCooardinate(PopUp item)
+        {
+            int min = (int)(popUpAreaBorders.minXCooardinate + item.width);
+            int max = (int)(popUpAreaBorders.maxXCooardinate - item.width);
+            return rnd.Next(min, max);
+        }
+
+        public double getRandomYCooardinate(PopUp item)
+        {
+            int min = (int)(popUpAreaBorders.minYCooardinate + item.width);
+            int max = (int)(popUpAreaBorders.maxYCooardinate - item.width);
+            return rnd.Next(min, max);
+        }
+
+        private bool checkPopUpOnPosition(double positionX, double positionY)
+        {
+            foreach (PopUp popUp in popUps)
+            {
+                if (checkIfElementOnPoisition(popUp, positionX, positionY, popUpSize))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private bool checkIfElementOnPoisition(PopUp popUp, double positionX, double positionY, double popUpSize)
+        {
+            //check if popUp has any interact with a new PopUp
+            if (
+                (positionX >= popUp.xCooardinate) && (positionX <= (popUp.xCooardinate + popUpSize)) && (positionY >= (popUp.yCooardinate)) && (positionY <= (popUp.yCooardinate + popUpSize)) ||                                             //left top corner is in a other Popup
+                (positionX >= popUp.xCooardinate) && (positionX <= (popUp.xCooardinate + popUpSize)) && (positionY + popUpSize >= (popUp.yCooardinate)) && (positionY + popUpSize <= (popUp.yCooardinate + popUpSize)) ||                         //left bottom corner is in a other Popup
+                (positionX + popUpSize >= popUp.xCooardinate) && (positionX + popUpSize <= (popUp.xCooardinate + popUpSize)) && (positionY >= (popUp.yCooardinate)) && (positionY <= (popUp.yCooardinate + popUpSize)) ||                         //right top corner is in a ohter Popup
+                (positionX + popUpSize >= popUp.xCooardinate) && (positionX + popUpSize <= (popUp.xCooardinate + popUpSize)) && (positionY + popUpSize >= (popUp.yCooardinate)) && (positionY + popUpSize <= (popUp.yCooardinate + popUpSize)))
+                return true;
+
+            return false;
+        }
+
+        private void checkCollision()
+        {
+            while (mw.getIsPlaying() && Thread.CurrentThread.ThreadState.Equals(ThreadState.Running))
+            {
+                //Ball out of PopUp Ground Borders
+                if (ballControl.currentXPosition > popUpAreaBorders.minXCooardinate && ballControl.currentXPosition < popUpAreaBorders.maxXCooardinate &&
+                    ballControl.currentYPosition > popUpAreaBorders.minYCooardinate && ballControl.currentYPosition < popUpAreaBorders.maxYCooardinate)
+                {
+                    lock (popUps)
+                    {
+                        int idx = 0;
+                        bool found = false;
+                        foreach (PopUp popUp in popUps)
+                        {
+                            if (checkConntectWithPopUpElement(ballControl, popUp))
+                            {
+                                found = true;
+                                break;
+                            }
+                            else
+                                idx++;
+                        }
+
+                        if (found)
+                        {
+                            doPopUpFunction(popUps.ElementAt(idx).id, directionisLeft);
+
+                            if (popUps.Count > 0)
+                            {
+                                mw.Playground.Dispatcher.Invoke(new Action(() => { mw.Playground.Children.Remove(popUps.ElementAt(idx).element); }));
+                                popUps.RemoveAt(idx);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //The diagonal get calculated with the Pythagoras, if the diagonal is smaller than the radius of the ball + the radius of the element
+        //then a collision has occured.
+        private bool checkConntectWithPopUpElement(BallControl ball, PopUp element)
+        {
+            double xPopUp = element.xCooardinate + element.width / 2;
+            double yPopUp = element.yCooardinate + element.height / 2;
+
+            double deltaX = (ball.currentXPosition - xPopUp) >= 0 ? (ball.currentXPosition - xPopUp) : (xPopUp - ball.currentXPosition);
+            double deltaY = (ball.currentYPosition - yPopUp) >= 0 ? (ball.currentYPosition - yPopUp) : (yPopUp - ball.currentYPosition);
+
+            double diagonal = Math.Sqrt(
+                Math.Pow(deltaX, 2) +
+                Math.Pow(deltaY, 2));
+            return diagonal <= (ball.width / 2 + element.width / 2);
+        }
+
+        private void doPopUpFunction(int id, bool isCurentDirectionLeft, bool runThread = true)
+        {
+            Thread thread = null;
+
+            switch (id)
+            {
+                #region //green plus
+                case 1:
+                    if (!isCurentDirectionLeft)
+                        lock (mw.Slider_Player1)
+                            mw.Slider_Player1.Dispatcher.Invoke(new Action(() => { PopUpControl.MakeSliderBigger(mw.Slider_Player1, mw.Playground_Slider1.Height); }));
+
+                    else
+                        lock (mw.Slider_Player2)
+                            mw.Slider_Player2.Dispatcher.Invoke(new Action(() => { PopUpControl.MakeSliderBigger(mw.Slider_Player2, mw.Playground_Slider2.Height); }));
+
+                    thread = new Thread(() => runPopOpThread(1, directionisLeft));
+                    break;
+                #endregion
+
+                #region//red plus
+                case 2:
+                    if (!isCurentDirectionLeft)
+                        lock (mw.Slider_Player2)
+                            mw.Slider_Player2.Dispatcher.Invoke(new Action(() => { PopUpControl.MakeSliderBigger(mw.Slider_Player2, mw.Playground_Slider2.Height); }));
+
+                    else
+                        lock (mw.Slider_Player1)
+                            mw.Slider_Player1.Dispatcher.Invoke(new Action(() => { PopUpControl.MakeSliderBigger(mw.Slider_Player1, mw.Playground_Slider1.Height); }));
+
+                    thread = new Thread(() => runPopOpThread(2, directionisLeft));
+                    break;
+                #endregion
+
+                #region//green minus
+                case 3:
+                    if (!isCurentDirectionLeft)
+                        lock (mw.Slider_Player2)
+                            mw.Slider_Player2.Dispatcher.Invoke(new Action(() => { PopUpControl.MakeSliderSmaller(mw.Slider_Player2, mw.Playground_Slider2.Height); }));
+
+                    else
+                        lock (mw.Slider_Player1)
+                            mw.Slider_Player1.Dispatcher.Invoke(new Action(() => { PopUpControl.MakeSliderSmaller(mw.Slider_Player1, mw.Playground_Slider1.Height); }));
+                    thread = new Thread(() => runPopOpThread(3, directionisLeft));
+                    break;
+                #endregion
+
+                #region//red minus
+                case 4:
+                    if (!isCurentDirectionLeft)
+                        lock (mw.Slider_Player1)
+                            mw.Slider_Player1.Dispatcher.Invoke(new Action(() => { PopUpControl.MakeSliderSmaller(mw.Slider_Player1, mw.Playground_Slider1.Height); }));
+
+                    else
+                        lock (mw.Slider_Player2)
+                            mw.Slider_Player2.Dispatcher.Invoke(new Action(() => { PopUpControl.MakeSliderSmaller(mw.Slider_Player2, mw.Playground_Slider2.Height); }));
+
+                    thread = new Thread(() => runPopOpThread(4, directionisLeft));
+                    break;
+                #endregion
+
+                #region//faster
+                case 5:
+                    PopUpControl.MakeBallFaster(ref ballControl);
+                    thread = new Thread(() => runPopOpThread(5, directionisLeft));
+                    break;
+                #endregion
+
+                #region//slower
+                case 6:
+                    PopUpControl.MakeBallSlower(ref ballControl);
+                    thread = new Thread(() => runPopOpThread(6, directionisLeft));
+                    break;
+                #endregion
+
+                #region //clear
+                case 7:
+                    PopUpControl.ClearPopUps(mw.Playground, popUps);
+                    runThread = false;
+                    break;
+                #endregion
+                
+                #region //questionmark
+                case 8:
+                doPopUpFunction(rnd.Next(1, id), isCurentDirectionLeft);
+                    break;
+                #endregion
+            }
+
+            if (runThread && thread != null)
+            {
+                popUpThreads.Add(thread);
+                thread.Name = "Thread_" + threadCounter;
+                threadCounter++;
+                thread.Start();
+            }
+        }
+
+        private void runPopOpThread(int id, bool isCurentDirectionLeft)
+        {
+            while (mw.getIsPlaying() && Thread.CurrentThread.ThreadState.Equals(ThreadState.Running))
+            {
+                Thread.Sleep(popUpActiveTime);
+                switch (id)
+                {
+                    case 1:
+                        doPopUpFunction(4, isCurentDirectionLeft, false); //red minus. My Slider is getting smaller.
+                        break;
+
+                    case 2:
+                        doPopUpFunction(3, isCurentDirectionLeft, false); //gree minus. Slider of the opponent getting smaller.
+                        break;
+
+                    case 3:
+                        doPopUpFunction(2, isCurentDirectionLeft, false); //red plus. Slider of opponent is getting bigger.
+                        break;
+
+                    case 4:
+                        doPopUpFunction(1, isCurentDirectionLeft, false); //green plus. My Slider is getting bigger.
+                        break;
+
+                    case 5:
+                        doPopUpFunction(6, isCurentDirectionLeft, false); //slower. The ball is getting slower.
+                        break;
+
+                    case 6:
+                        doPopUpFunction(5, isCurentDirectionLeft, false); //faster. The ball is getting faster.
+                        break;
+                }
+                popUpThreads.Remove(Thread.CurrentThread);
+                Thread.CurrentThread.Abort();
+            }
         }
 
         public void readDataFromArduino()
@@ -178,9 +615,10 @@ namespace PongGame
 
         public void ballMove()
         {
+            //setBallInMiddleOfPlayground();
             while (mw.getIsPlaying() && Thread.CurrentThread.ThreadState.Equals(ThreadState.Running))
             {
-                Thread.Sleep(10);
+                Thread.Sleep(ballControl.sleepingTime);
                 ballControl.ball.Dispatcher.InvokeAsync(
                     new Action(() =>
                     {
@@ -252,19 +690,27 @@ namespace PongGame
         {
             bool bySlider = false;
 
-            Canvas.SetLeft(ballControl.ball, Canvas.GetLeft(ballControl.ball) + ballControl.movingXDistance);
-            Canvas.SetTop(ballControl.ball, Canvas.GetTop(ballControl.ball) + ballControl.movingYDistance);
+            ballControl.currentXPosition += ballControl.movingXDistance;
+            ballControl.currentYPosition += ballControl.movingYDistance;
 
-            if (Canvas.GetLeft(ballControl.ball) < slider.Width)
+            if (ballControl.currentXPosition - ballControl.width / 2 < slider.Width)
             {
+                ballControl.currentXPosition = (slider.Width + ballControl.width / 2);
                 Canvas.SetLeft(ballControl.ball, slider.Width);
                 bySlider = true;
             }
 
-            if (Canvas.GetLeft(ballControl.ball) > (mw.Playground.Width - slider.Width - ballControl.ball.Width))
+            else if (ballControl.currentXPosition + ballControl.width / 2 > (mw.Playground.Width - slider.Width))
             {
-                Canvas.SetLeft(ballControl.ball, (mw.Playground.Width - slider.Width - ballControl.ball.Width));
+                ballControl.currentXPosition = (mw.Playground.Width - slider.Width - ballControl.width / 2);
+                Canvas.SetLeft(ballControl.ball, ballControl.currentXPosition - ballControl.width / 2);
                 bySlider = true;
+            }
+
+            else
+            {
+                Canvas.SetLeft(ballControl.ball, ballControl.currentXPosition - ballControl.width / 2);
+                Canvas.SetTop(ballControl.ball, ballControl.currentYPosition - ballControl.height / 2);
             }
 
 
@@ -275,16 +721,14 @@ namespace PongGame
                 {
                     int player = (directionisLeft) ? 1 : 2;
                     mw.noContactWithBallAndPlayer(player);
-
                 }
 
                 else
-                    ballControl.movingYDistance = getYAxisForBall(slider, ballControl.ball, ballControl.movingXDistance); 
+                    ballControl.movingYDistance = getYAxisForBall(slider, ballControl.ball, ballControl.movingXDistance);
 
                 directionisLeft = (directionisLeft) ? false : true;
-                directionChanged = true;
                 ballControl.movingXDistance *= -1;
-                
+
             }
 
             if (checkContactWithBorder())
@@ -348,8 +792,6 @@ namespace PongGame
             })
             );
         }
-
-
 
         private double getYAxisForBall(Rectangle slider, Ellipse ball, int x)
         {
@@ -432,6 +874,78 @@ namespace PongGame
                 under = false;
 
             return under;
+        }
+
+        public void setBallInMiddleOfPlayground()
+        {
+            ballControl.ball.Dispatcher.Invoke(
+            new Action(() =>
+            {
+                ballControl.currentXPosition = mw.Playground.Width / 2;
+                ballControl.currentYPosition = mw.Playground.Height / 2;
+                Canvas.SetLeft(ballControl.ball, ballControl.currentXPosition - ballControl.width / 2);
+                Canvas.SetTop(ballControl.ball, ballControl.currentYPosition - ballControl.height / 2);
+            }));
+        }
+
+        public void resetPlaygroud()
+        {
+            PopUpControl.ClearPopUps(mw.Playground, popUps);
+            stopPopUpThreads();
+            popUpThreads.Clear();
+
+            PopUpControl.ResetBallSpeed(ref ballControl);
+            PopUpControl.ResetSliderHeight(mw.Slider_Player1, mw.Playground_Slider1.Height);
+            PopUpControl.ResetSliderHeight(mw.Slider_Player2, mw.Playground_Slider2.Height);
+            //setBallInMiddleOfPlayground();
+        }
+
+        public void stopPopUpThreads()
+        {
+            foreach (Thread thread in popUpThreads)
+            {
+                if (thread != null && thread.IsAlive)
+                    thread.Abort();
+            }
+        }
+
+        public void interruptThreads()
+        {
+            foreach (Thread thread in popUpThreads)
+            {
+                if (thread != null && thread.IsAlive)
+                    thread.Join();
+            }
+        }
+
+        public void runThreads()
+        {
+            foreach (Thread thread in popUpThreads)
+            {
+                if (thread != null && thread.ThreadState.Equals(ThreadState.Stopped))
+                    thread.Start();
+            }
+        }
+
+        public void stopPopUpTimer()
+        {
+            if (popUpCreationThread.IsAlive)
+            {
+                popUpCreationThread.Abort();
+                collisionThread.Abort();
+            }
+        }
+
+        public void startPopUpTimer()
+        {
+            if (!popUpCreationThread.IsAlive)
+            {
+                popUpCreationThread = new Thread(createPopUp);
+                popUpCreationThread.SetApartmentState(ApartmentState.STA);
+                collisionThread = new Thread(checkCollision);
+                popUpCreationThread.Start();
+                collisionThread.Start();
+            }
         }
     }
 }

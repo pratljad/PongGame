@@ -82,3 +82,43 @@ C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignCo
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.dll
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.pdb
 C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.xml
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\bin\Debug\PongGame.exe.config
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\bin\Debug\PongGame.exe
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\bin\Debug\PongGame.pdb
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\bin\Debug\Arduino.dll
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignColors.dll
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.dll
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\bin\Debug\Arduino.pdb
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.pdb
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.xml
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\obj\Debug\PongGame.csprojResolveAssemblyReference.cache
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\obj\Debug\MainWindow.g.cs
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\obj\Debug\App.g.cs
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\obj\Debug\PongGame_MarkupCompile.cache
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\obj\Debug\PongGame_MarkupCompile.lref
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\obj\Debug\MainWindow.baml
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\obj\Debug\PongGame.g.resources
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\obj\Debug\PongGame.Properties.Resources.resources
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\obj\Debug\PongGame.csproj.GenerateResource.Cache
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\obj\Debug\PongGame.exe
+D:\Schule\5AHIFS\SYP\PongGame\PongGame\PongGame\obj\Debug\PongGame.pdb
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\obj\Debug\PongGame.csprojResolveAssemblyReference.cache
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\obj\Debug\MainWindow.g.cs
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\obj\Debug\App.g.cs
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\obj\Debug\PongGame_MarkupCompile.cache
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\obj\Debug\PongGame_MarkupCompile.lref
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\obj\Debug\PongGame.exe
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\obj\Debug\PongGame.pdb
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\bin\Debug\PongGame.exe.config
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\bin\Debug\PongGame.exe
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\bin\Debug\PongGame.pdb
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\bin\Debug\Arduino.dll
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\bin\Debug\MaterialDesignColors.dll
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.dll
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\bin\Debug\Arduino.pdb
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.pdb
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\bin\Debug\MaterialDesignThemes.Wpf.xml
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\obj\Debug\MainWindow.baml
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\obj\Debug\PongGame.g.resources
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\obj\Debug\PongGame.Properties.Resources.resources
+D:\Schule\5AHIFS\SYP\Klaudi_Backup\PongGame\PongGame\obj\Debug\PongGame.csproj.GenerateResource.Cache

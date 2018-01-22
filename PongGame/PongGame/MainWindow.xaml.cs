@@ -32,12 +32,25 @@ namespace PongGame
         public Ellipse ball;
         public double movingYDistance;
         public int movingXDistance;
+        public int width;
+        public int height;
+        public int sleepingTime;
+        public double currentXPosition;
+        public double currentYPosition;
+        public SolidColorBrush color;
 
-        public BallControl(Ellipse ball, int movingXDistance, double movingYDistance)
+        public BallControl(Ellipse ball, double currentXPosition, double currentYPosition, int movingXDistance, double movingYDistance, int sleepingTime, SolidColorBrush color)
         {
             this.ball = ball;
+            this.currentXPosition = currentXPosition;
+            this.currentYPosition = currentYPosition;
             this.movingXDistance = movingXDistance;
             this.movingYDistance = movingYDistance;
+            this.sleepingTime = sleepingTime;
+            width = 30;
+            height = 30;
+
+            this.color = color;
         }
     }
 
@@ -88,6 +101,7 @@ namespace PongGame
             mode = 1;
 
             myGame = new Pong(this);
+            myGame.setBallInMiddleOfPlayground();
             isPlaying = false;
 
             initRectangleArrays();
@@ -350,7 +364,7 @@ namespace PongGame
             if (!isPlaying)
             {
                 tt.Stop();
-
+                myGame.stopPopUpTimer();
                 if (pongThreadBall != null)     // otherwise exception occures if the game never started
                 {
                     pongThreadBall.Abort();
@@ -362,6 +376,8 @@ namespace PongGame
 
                 if (winner != -1)
                 {
+                    myGame.stopPopUpThreads();
+
                     if (winner == 1)
                         addPoint(1);
 
@@ -396,10 +412,13 @@ namespace PongGame
                 //pongThreadPlayerTwo = new Thread(myGame.runPlayerTwo);
 
 
+                myGame.resetPlaygroud();
+
                 arduinoGetDataAndMovingSliderThread.Start();
                 pongThreadPlayerOne.Start();
                 pongThreadPlayerTwo.Start();
                 pongThreadBall.Start();
+                myGame.startPopUpTimer();
             }
         }
 
