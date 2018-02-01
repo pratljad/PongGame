@@ -22,9 +22,10 @@ namespace PongGame
     /// </summary>
     public partial class Congratulations : Window
     {
-        int seconds = 0;
-        Timer tt = null;
-        MainWindow mw = null;
+        private int seconds = 0;
+        private Timer tt = null;
+        private MainWindow mw = null;
+        private string directory = System.IO.Path.GetFullPath("../../../Images/");
 
         public Congratulations(MainWindow mw)
         {
@@ -33,12 +34,12 @@ namespace PongGame
             tt = new Timer(1000);
             tt.Elapsed += new ElapsedEventHandler(_timer_Elapsed);
             tt.Start();
-
             this.mw = mw;
 
+            this.Icon = BitmapFrame.Create(new Uri(directory + "Icon.ico", UriKind.Absolute));
             var image = new BitmapImage();
             image.BeginInit();
-            image.UriSource = new Uri(@"C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\giphy.gif");
+            image.UriSource = new Uri(directory + "Giphy.gif", UriKind.Absolute);
             image.EndInit();
             ImageBehavior.SetAnimatedSource(GIF, image);
         }

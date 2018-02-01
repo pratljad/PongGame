@@ -68,10 +68,10 @@ namespace PongGame
         private int differenceTopBallSlider = 0;
         private string path = "../../../Images/";
 
-        private int popUpCreationDelay = 10;
-        private int popUpActiveTime = 4000;
+        private int popUpCreationDelay = 200;
+        private int popUpActiveTime = 3000;
         private List<PopUp> popUps;
-        private int maxPopUps = 45;
+        private int maxPopUps = 15;
         private int popUpSize = 20;
         private List<Thread> popUpThreads;
         private int threadCounter = 0;
@@ -294,31 +294,39 @@ namespace PongGame
                 if (ballControl.currentXPosition > popUpAreaBorders.minXCooardinate && ballControl.currentXPosition < popUpAreaBorders.maxXCooardinate &&
                     ballControl.currentYPosition > popUpAreaBorders.minYCooardinate && ballControl.currentYPosition < popUpAreaBorders.maxYCooardinate)
                 {
-                    lock (popUps)
+                    try
                     {
-                        int idx = 0;
-                        bool found = false;
-                        foreach (PopUp popUp in popUps)
+                        lock (popUps)
                         {
-                            if (checkConntectWithPopUpElement(ballControl, popUp))
+                            int idx = 0;
+                            bool found = false;
+                            foreach (PopUp popUp in popUps)
                             {
-                                found = true;
-                                break;
+                                if (checkConntectWithPopUpElement(ballControl, popUp))
+                                {
+                                    found = true;
+                                    break;
+                                }
+                                else
+                                    idx++;
                             }
-                            else
-                                idx++;
-                        }
 
-                        if (found)
-                        {
-                            doPopUpFunction(popUps.ElementAt(idx).id, directionisLeft);
-
-                            if (popUps.Count > 0)
+                            if (found)
                             {
-                                mw.Playground.Dispatcher.Invoke(new Action(() => { mw.Playground.Children.Remove(popUps.ElementAt(idx).element); }));
-                                popUps.RemoveAt(idx);
+                                doPopUpFunction(popUps.ElementAt(idx).id, directionisLeft);
+
+                                if (popUps.Count > 0)
+                                {
+                                    mw.Playground.Dispatcher.Invoke(new Action(() => { mw.Playground.Children.Remove(popUps.ElementAt(idx).element); }));
+                                    popUps.RemoveAt(idx);
+                                }
                             }
                         }
+                    }
+
+                    catch (Exception)
+                    {
+
                     }
                 }
             }
@@ -356,7 +364,7 @@ namespace PongGame
                         lock (mw.Slider_Player2)
                             mw.Slider_Player2.Dispatcher.Invoke(new Action(() => { PopUpControl.MakeSliderBigger(mw.Slider_Player2, mw.Playground_Slider2.Height); }));
 
-                    thread = new Thread(() => runPopOpThread(1, directionisLeft));
+                    thread = new Thread(() => runPopUpThread(1, directionisLeft));
                     break;
                 #endregion
 
@@ -370,7 +378,7 @@ namespace PongGame
                         lock (mw.Slider_Player1)
                             mw.Slider_Player1.Dispatcher.Invoke(new Action(() => { PopUpControl.MakeSliderBigger(mw.Slider_Player1, mw.Playground_Slider1.Height); }));
 
-                    thread = new Thread(() => runPopOpThread(2, directionisLeft));
+                    thread = new Thread(() => runPopUpThread(2, directionisLeft));
                     break;
                 #endregion
 
@@ -383,7 +391,7 @@ namespace PongGame
                     else
                         lock (mw.Slider_Player1)
                             mw.Slider_Player1.Dispatcher.Invoke(new Action(() => { PopUpControl.MakeSliderSmaller(mw.Slider_Player1, mw.Playground_Slider1.Height); }));
-                    thread = new Thread(() => runPopOpThread(3, directionisLeft));
+                    thread = new Thread(() => runPopUpThread(3, directionisLeft));
                     break;
                 #endregion
 
@@ -397,21 +405,21 @@ namespace PongGame
                         lock (mw.Slider_Player2)
                             mw.Slider_Player2.Dispatcher.Invoke(new Action(() => { PopUpControl.MakeSliderSmaller(mw.Slider_Player2, mw.Playground_Slider2.Height); }));
 
-                    thread = new Thread(() => runPopOpThread(4, directionisLeft));
+                    thread = new Thread(() => runPopUpThread(4, directionisLeft));
                     break;
                 #endregion
 
                 #region//faster
                 case 5:
                     PopUpControl.MakeBallFaster(ref ballControl);
-                    thread = new Thread(() => runPopOpThread(5, directionisLeft));
+                    thread = new Thread(() => runPopUpThread(5, directionisLeft));
                     break;
                 #endregion
 
                 #region//slower
                 case 6:
                     PopUpControl.MakeBallSlower(ref ballControl);
-                    thread = new Thread(() => runPopOpThread(6, directionisLeft));
+                    thread = new Thread(() => runPopUpThread(6, directionisLeft));
                     break;
                 #endregion
 
@@ -421,12 +429,12 @@ namespace PongGame
                     runThread = false;
                     break;
                 #endregion
-                
+
                 #region //questionmark
                 case 8:
-                doPopUpFunction(rnd.Next(1, id), isCurentDirectionLeft);
+                    doPopUpFunction(rnd.Next(1, id), isCurentDirectionLeft);
                     break;
-                #endregion
+                    #endregion
             }
 
             if (runThread && thread != null)
@@ -438,7 +446,7 @@ namespace PongGame
             }
         }
 
-        private void runPopOpThread(int id, bool isCurentDirectionLeft)
+        private void runPopUpThread(int id, bool isCurentDirectionLeft)
         {
             while (mw.getIsPlaying() && Thread.CurrentThread.ThreadState.Equals(ThreadState.Running))
             {
@@ -552,7 +560,7 @@ namespace PongGame
 
             int distanceMidAndImpactingPoint = 35;
 
-            int rndNumber = getRandomForKI();           
+            int rndNumber = getRandomForKI();
 
             int heightBall = 0;
             int heightSlider = 0;
@@ -560,20 +568,10 @@ namespace PongGame
             while (mw.getIsPlaying() && Thread.CurrentThread.ThreadState.Equals(ThreadState.Running))
             {
                 Thread.Sleep(1);
-                
+
                 if (directionChanged == true)
                 {
-                    if (directionisLeft == false)
-                    {
-                        // Ball goes right
-                        rndNumber = getRandomForKI();
-                    }
-                    else if (directionisLeft == true)
-                    {
-                        // Ball goes left
-                        rndNumber = getRandomForKI();
-                    }
-
+                    rndNumber = getRandomForKI();
                     directionChanged = false;
                 }
 
@@ -586,7 +584,7 @@ namespace PongGame
                          {
                              heightSlider = Convert.ToInt32(Canvas.GetTop(mw.Slider_Player2));
 
-                             if(rndNumber == 1)
+                             if (rndNumber == 1)
                              {
                                  if (heightSlider < (heightBall - differenceTopBallSlider) + distanceMidAndImpactingPoint)
                                  {
@@ -654,9 +652,9 @@ namespace PongGame
                         string[] split = Convert.ToString(mw.TF_Timer.Content).Split(':');
 
                         sec = (Convert.ToInt32(split[0]) * 60) + Convert.ToInt32(split[1]);
-                        if(sec % 5 == 0)
+                        if (sec % 5 == 0)
                         {
-                            if(sequenzDone == false)
+                            if (sequenzDone == false)
                             {
                                 if (threadSleep > 2)
                                     threadSleep -= 1;
@@ -818,7 +816,7 @@ namespace PongGame
         private double getAngleOfImpact(Ellipse ball, Rectangle slider)
         {
             //Schlussrechnung ausbaufähig
-            return (getMiddleOfBall(ball) - getMiddleOfSlider(slider)) * maxAngle / (slider.Height)*-1;
+            return (getMiddleOfBall(ball) - getMiddleOfSlider(slider)) * maxAngle / (slider.Height) * -1;
         }
 
         private bool checkContactWithSlider()
@@ -897,7 +895,9 @@ namespace PongGame
             PopUpControl.ResetBallSpeed(ref ballControl);
             PopUpControl.ResetSliderHeight(mw.Slider_Player1, mw.Playground_Slider1.Height);
             PopUpControl.ResetSliderHeight(mw.Slider_Player2, mw.Playground_Slider2.Height);
-            //setBallInMiddleOfPlayground();
+            setBallInMiddleOfPlayground();
+            //directionisLeft = directionisLeft ? directionisLeft = false : directionisLeft = true;
+            ballControl.movingYDistance = 0;
         }
 
         public void stopPopUpThreads()

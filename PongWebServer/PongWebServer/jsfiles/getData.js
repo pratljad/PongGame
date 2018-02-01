@@ -47,7 +47,7 @@ function renewTableStructureWithData(data, category) {
             $('.points_table').append(tableToAppend);
             break;
         case 'aivsp':
-            tableToAppend += '<th class="col-md-4">Rank</th><th class="col-md-4">User</th><th class="col-md-4">Time Played</th></tr></thead><tbody class="points_table_scrollbar">';
+            tableToAppend += '<th class="col-md-2">Rank</th><th class="col-md-4">User</th><th class="col-md-2">Wins</th><th class="col-md-2">Losses</th><th class="col-md-2">Time Played</th></tr></thead><tbody class="points_table_scrollbar">';
             tableToAppend += renewTablesForPvsAI(data);
             console.log(tableToAppend);
             $('.points_table').empty();
@@ -76,11 +76,11 @@ function renewTablesForPvsAI(data) {
     var returnString = "";
     for (var i = 0; i < data.length; i++) {
         if (i % 2 == 0) {
-            returnString += '<tr class="even"><td class="col-md-4">' + (i+1) + '</td><td class="col-md-4">' + data[i].username + '</td><td class="col-md-4">' + data[i].time + '</td></tr>';
+            returnString += '<tr class="even"><td class="col-md-2">' + (i + 1) + '</td><td class="col-md-4">' + data[i].username + '</td><td class="col-md-2">' + data[i].wins + '</td><td class="col-md-2">' + data[i].losses + '</td><td class="col-md-2">' + data[i].time + '</td></tr>';
         }
 
         else {
-            returnString += '<tr class="odd"><td class="col-md-4">' + (i + 1) + '</td><td class="col-md-4">' + data[i].username + '</td><td class="col-md-4">' + data[i].time + '</td></tr>';
+            returnString += '<tr class="odd"><td class="col-md-2">' + (i + 1) + '</td><td class="col-md-4">' + data[i].username + '</td><td class="col-md-2">' + data[i].wins + '</td><td class="col-md-2">' + data[i].losses + '</td><td class="col-md-2">' + data[i].time + '</td></tr>';
         }
     }
     returnString += '</tbody></table>';

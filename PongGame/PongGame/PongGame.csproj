@@ -34,6 +34,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
@@ -69,13 +73,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-<<<<<<< HEAD
-    <Compile Include="PopUpControl.cs" />
-=======
     <Compile Include="Congratulations.xaml.cs">
       <DependentUpon>Congratulations.xaml</DependentUpon>
     </Compile>
->>>>>>> de94b96f4b5a45c6c9c0d86259939b40c5ba5a14
+    <Compile Include="GameControle.cs" />
+    <Compile Include="KIData.cs" />
+    <Compile Include="Pong.cs" />
+    <Compile Include="PopUpControl.cs" />
     <Compile Include="Userdata.cs" />
     <Page Include="Congratulations.xaml">
       <SubType>Designer</SubType>
@@ -97,7 +101,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Player.cs" />
-    <Compile Include="Pong.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -130,6 +133,9 @@
       <Project>{4b535980-c91c-401f-80b8-25270d3ac319}</Project>
       <Name>Arduino</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

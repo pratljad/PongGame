@@ -15,17 +15,22 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:local="clr-namespace:Configuration"
         mc:Ignorable="d"
-        Title="SettingsPKI" Height="383.273" Width="366.176" Closed="Window_Closed">
+        Title="SettingsPKI" Height="383.273" Width="366.176" Closed="Window_Closed" ResizeMode="NoResize">
     <Grid>
-        <materialDesign:Card Padding="20" Margin="10,10,9.8,0" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80*"/>
+            <ColumnDefinition Width="227*"/>
+            <ColumnDefinition Width="51*"/>
+        </Grid.ColumnDefinitions>
+        <materialDesign:Card Padding="20" Margin="10,10,10,0" Grid.ColumnSpan="3" >
             <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" HorizontalAlignment="Center" Width="Auto">
             </TextBlock>
         </materialDesign:Card>
-        <TextBox x:Name="TBNicknamePlayer" HorizontalAlignment="Left" Height="45" Margin="75,102,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="240" GotKeyboardFocus="TBNicknamePlayer_GotKeyboardFocus" LostKeyboardFocus="TBNicknamePlayer_LostKeyboardFocus" Text="Nickname" FontSize="20"/>
-        <xctk:ColorPicker x:Name="ColorPlayer" Margin="34,159,45,0" Height="89" VerticalAlignment="Top" SelectedColorChanged="ColorPlayer_SelectedColorChanged"/>
-        <Button x:Name="BTN_Start" Content="Start the Game!" HorizontalAlignment="Left" Margin="34,269,0,0" VerticalAlignment="Top" Width="281" Height="44" Click="BTN_Start_Click" BorderBrush="Black"/>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="46" Margin="34,31,0,0" VerticalAlignment="Top" Width="281" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\player1.png"/>
-        <Image x:Name="image1_Copy" HorizontalAlignment="Left" Height="26" Margin="39,121,0,0" VerticalAlignment="Top" Width="26" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\user.png" RenderTransformOrigin="0.5,0.5">
+        <TextBox x:Name="TBNicknamePlayer" HorizontalAlignment="Left" Height="45" Margin="75,102,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="240" GotKeyboardFocus="TBNicknamePlayer_GotKeyboardFocus" LostKeyboardFocus="TBNicknamePlayer_LostKeyboardFocus" Text="Nickname" FontSize="20" Grid.ColumnSpan="3"/>
+        <xctk:ColorPicker x:Name="ColorPlayer" Margin="34,159,45,0" Height="89" VerticalAlignment="Top" SelectedColorChanged="ColorPlayer_SelectedColorChanged" Grid.ColumnSpan="3"/>
+        <Button x:Name="BTN_Start" Content="Start the Game!" HorizontalAlignment="Left" Margin="34,269,0,0" VerticalAlignment="Top" Width="281" Height="44" Click="BTN_Start_Click" BorderBrush="Black" Grid.ColumnSpan="3"/>
+        <Image x:Name="image1" HorizontalAlignment="Left" Height="46" Margin="34,31,0,0" VerticalAlignment="Top" Width="281" Source="Images/Player1.png" Grid.ColumnSpan="3"/>
+        <Image x:Name="image2" HorizontalAlignment="Left" Height="26" Margin="39,121,0,0" VerticalAlignment="Top" Width="26" Source="Images/User.png" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleX="-1"/>
@@ -35,7 +40,7 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <Rectangle x:Name="rectColor" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="89" Margin="34,159,0,0" Stroke="Black" VerticalAlignment="Top" Width="255"/>
+        <Rectangle x:Name="rectColor" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="89" Margin="34,159,0,0" Stroke="Black" VerticalAlignment="Top" Width="255" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

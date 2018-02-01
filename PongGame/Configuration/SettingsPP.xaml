@@ -16,7 +16,7 @@
         
         xmlns:local="clr-namespace:Configuration"
         mc:Ignorable="d"
-        Title="SettingsPP" Height="377.496" Width="655.127" Closed="Window_Closed">
+        Title="SettingsPP" Height="377.496" Width="655.127" Closed="Window_Closed" ResizeMode="NoResize">
 
     <Grid Height="383" VerticalAlignment="Top">
         <materialDesign:Card Padding="20" Margin="10,10,9.8,0" >
@@ -28,9 +28,9 @@
         <xctk:ColorPicker x:Name="ColorPlayer2" Margin="341,159,27.8,0" Height="89" VerticalAlignment="Top" SelectedColorChanged="ColorPlayer2_SelectedColorChanged"/>
         <xctk:ColorPicker x:Name="ColorPlayer1" Margin="34,159,333.8,0" Height="89" VerticalAlignment="Top" SelectedColorChanged="ColorPlayer1_SelectedColorChanged"/>
         <Button x:Name="BTN_Start" Content="Start the Game!" HorizontalAlignment="Left" Margin="34,269,0,0" VerticalAlignment="Top" Width="587" Height="44" Click="BTN_Start_Click" BorderBrush="Black"/>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="46" Margin="34,31,0,0" VerticalAlignment="Top" Width="281" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\player1.png"/>
-        <Image x:Name="image_Copy" HorizontalAlignment="Left" Height="46" Margin="335,0,-13.8,303" VerticalAlignment="Bottom" Width="325" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\player2.png"/>
-        <Image x:Name="image1" HorizontalAlignment="Left" Height="26" Margin="344,120,0,0" VerticalAlignment="Top" Width="26" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\user.png" RenderTransformOrigin="0.5,0.5">
+        <Image x:Name="image1" HorizontalAlignment="Left" Height="46" Margin="34,31,0,0" VerticalAlignment="Top" Width="281" Source="Images/Player1.png"/>
+        <Image x:Name="image2" HorizontalAlignment="Left" Height="46" Margin="335,0,-13.8,303" VerticalAlignment="Bottom" Width="325" Source="Images/Player2.png"/>
+        <Image x:Name="image3" HorizontalAlignment="Left" Height="26" Margin="344,120,0,0" VerticalAlignment="Top" Width="26" Source="Images/User.png" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleX="-1"/>
@@ -40,7 +40,7 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <Image x:Name="image1_Copy" HorizontalAlignment="Left" Height="26" Margin="39,121,0,0" VerticalAlignment="Top" Width="26" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\user.png" RenderTransformOrigin="0.5,0.5">
+        <Image x:Name="image4" HorizontalAlignment="Left" Height="26" Margin="39,121,0,0" VerticalAlignment="Top" Width="26" Source="Images/User.png" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleX="-1"/>

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PongGame;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,11 @@ namespace Configuration
     public partial class SettingsPP : Window
     {
         private MainWindow _mw = null;
+        private string directory = GameControle.getAbsoluteImagePath();
         public SettingsPP(MainWindow mw)
         {
             InitializeComponent();
+            init();
             _mw = mw;
 
             // Settings
@@ -30,6 +34,18 @@ namespace Configuration
             ColorPlayer2.SelectedColor = Colors.Green;
             TBNicknamePlayer1.Foreground = Brushes.Gray;
             TBNicknamePlayer2.Foreground = Brushes.Gray;
+        }
+
+        private void init()
+        {
+            if (Directory.Exists(GameControle.getAbsoluteImagePath()))
+            {
+                this.Icon = GameControle.getIcon();
+                image1.Source = GameControle.getImagePlayerOne();
+                image2.Source = GameControle.getImagePlayerTwo();
+                image3.Source = GameControle.getImageUser();
+                image4.Source = GameControle.getImageUser();
+            }
         }
 
         private void BTN_Start_Click(object sender, RoutedEventArgs e)
@@ -41,7 +57,7 @@ namespace Configuration
                     if(!(WordFilter.filter.Contains(TBNicknamePlayer1.Text) || WordFilter.filter.Contains(TBNicknamePlayer2.Text)))
                     {
                         this.Close();
-
+                        GameControle.gameStarted();
                         PongGame.MainWindow pg = new PongGame.MainWindow(TBNicknamePlayer1.Text, TBNicknamePlayer2.Text, (Color)ColorPlayer1.SelectedColor, (Color)ColorPlayer2.SelectedColor);
                         pg.Show();
                     }
@@ -63,7 +79,7 @@ namespace Configuration
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            _mw.opened = false;
+            _mw.windowPlayerVsPlayerOpened = false;
         }
 
         private void TBNicknamePlayer1_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)

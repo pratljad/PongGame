@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PongGame;
 
 namespace Configuration
 {
@@ -19,17 +21,28 @@ namespace Configuration
     /// </summary>
     public partial class SettingsPKI : Window
     {
-        MainWindow _mw = null;
+        private MainWindow _mw = null;
+        private string directory = GameControle.getAbsoluteImagePath();
 
         public SettingsPKI(MainWindow mw)
         {
             InitializeComponent();
-
+            init();
             _mw = mw;
 
             // Settings
             ColorPlayer.SelectedColor = Colors.Blue;
             TBNicknamePlayer.Foreground = Brushes.Gray;
+        }
+
+        private void init()
+        {
+            if (Directory.Exists(GameControle.getAbsoluteImagePath()))
+            {
+                this.Icon = GameControle.getIcon();
+                image1.Source = GameControle.getImagePlayerOne();
+                image2.Source = GameControle.getImageUser();
+            }
         }
 
         private void BTN_Start_Click(object sender, RoutedEventArgs e)
@@ -41,7 +54,7 @@ namespace Configuration
                     if (!(WordFilter.filter.Contains(TBNicknamePlayer.Text)))
                     {
                         this.Close();
-
+                        GameControle.gameStarted();
                         PongGame.MainWindow pg = new PongGame.MainWindow(TBNicknamePlayer.Text, (Color)ColorPlayer.SelectedColor);
                         pg.Show();
                     }
@@ -92,7 +105,7 @@ namespace Configuration
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            _mw.opened2 = false;
+            _mw.windowPlayerVsKiOpened = false;
         }
     }
 }   

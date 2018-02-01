@@ -65,46 +65,48 @@ namespace PongGame
     /// </summary>
     public partial class MainWindow : Window
     {
-        Pong myGame;
+        private Pong myGame;
        
 
-        Thread pongThreadBall;
-        Thread arduinoGetDataAndMovingSliderThread;
-        Thread pongThreadPlayerOne;
-        Thread pongThreadPlayerTwo;
+        private Thread pongThreadBall;
+        private Thread arduinoGetDataAndMovingSliderThread;
+        private Thread pongThreadPlayerOne;
+        private Thread pongThreadPlayerTwo;
 
-        bool isPlaying;
-        int winner = -1;
+        private bool isPlaying;
+        private int winner = -1;
 
-        PlayerControl player1 = new PlayerControl();
-        PlayerControl player2 = new PlayerControl();
-        ArduinoController arduinoController;
+        private PlayerControl player1 = new PlayerControl();
+        private PlayerControl player2 = new PlayerControl();
+        private ArduinoController arduinoController;
 
         // Timer
-        System.Timers.Timer tt = new System.Timers.Timer(1000);
-        int seconds = 0;
-        int minutes = 0;
-        string actualTime = "";
-        
-        Player firstPlayer;
-        Player secondPlayer;
+        private System.Timers.Timer tt = new System.Timers.Timer(1000);
+        private int seconds = 0;
+        private int minutes = 0;
+        private string actualTime = "";
 
-        Rectangle[] firstPlayerRectangles;
-        Rectangle[] secondPlayerRectangles;
+        private Player firstPlayer;
+        private Player secondPlayer;
 
-        int mode = 0;
+        private Rectangle[] firstPlayerRectangles;
+        private Rectangle[] secondPlayerRectangles;
+
+        private int mode = 0;
+        private string directory = System.IO.Path.GetFullPath("../../../Images/");
 
         // Player vs Player
         public MainWindow(string nickname1, string nickname2, Color colorPlayer1, Color colorPlayer2)
         {
             InitializeComponent();
+            init();
+            arduinoController = new ArduinoController("COM4");
 
             resetPositions();
 
             mode = 1;
 
             myGame = new Pong(this);
-            myGame.setBallInMiddleOfPlayground();
             isPlaying = false;
 
             initRectangleArrays();
@@ -114,12 +116,14 @@ namespace PongGame
             setNicknameAndColor();
 
             tt.Elapsed += new ElapsedEventHandler(_timer_Elapsed);
-            arduinoController = new ArduinoController("COM3");
         }
 
+        //Player vs KI
         public MainWindow(string nickname, Color colorPlayer)
         {
             InitializeComponent();
+            init();
+            arduinoController = new ArduinoController("COM4");
 
             resetPositions();
 
@@ -136,8 +140,17 @@ namespace PongGame
             setVisible();
 
             tt.Elapsed += new ElapsedEventHandler(_timer_Elapsed);
-            arduinoController = new ArduinoController("COM3");
-            
+        }
+
+        private void init()
+        {
+            if (Directory.Exists(GameControle.getAbsoluteImagePath()))
+            {
+                this.Icon = GameControle.getIcon();
+                imagePlayground.Source = GameControle.getImagePlayground();
+                imageLeft.Source = GameControle.getImagePlaygroundLeft();
+                imageRight.Source = GameControle.getImagePlaygroundRight();
+            }
         }
 
         private void setVisible()
@@ -147,6 +160,7 @@ namespace PongGame
             p1p3.Visibility = Visibility.Hidden;
             p1p4.Visibility = Visibility.Hidden;
             p1p5.Visibility = Visibility.Hidden;
+            p2p1.Visibility = Visibility.Hidden;
             p2p2.Visibility = Visibility.Hidden;
             p2p3.Visibility = Visibility.Hidden;
             p2p4.Visibility = Visibility.Hidden;
@@ -157,6 +171,7 @@ namespace PongGame
         {
             Canvas.SetTop(Slider_Player1, (Playground_Slider1.Height / 2) - (Slider_Player1.Height) / 2);
             Canvas.SetTop(Slider_Player2, (Playground_Slider2.Height / 2) - (Slider_Player2.Height) / 2);
+            
             Canvas.SetTop(Ball, (Playground.Height / 2) - (Ball.Height) / 2);
             Canvas.SetLeft(Ball, (Playground.Width / 2) - (Ball.Width / 2));
         }
@@ -252,54 +267,99 @@ namespace PongGame
 
         public void setPoints(Player player, Rectangle[] playerRectangles)
         {
-            switch (player.getPoints())
+            if (mode == 1)
             {
-                case 0:
-                    if(mode == 2)
-                    {
-                        Congratulations wi = new Congratulations(this);
-                        wi.Show();
-                        player.addPoints();
-                        resetPositions();
-                    }
-                    else
-                    {
+
+                switch (player.getPoints())
+                {
+                    case 0:
                         playerRectangles[0].Fill = new SolidColorBrush(player.getColor());
                         player.addPoints();
                         resetPositions();
-                    }
-                    break;
-                case 1:
-                    playerRectangles[1].Fill = new SolidColorBrush(player.getColor());
-                    player.addPoints();
-                    resetPositions();
-                    break;
-                case 2:
-                    playerRectangles[2].Fill = new SolidColorBrush(player.getColor());
-                    player.addPoints();
-                    resetPositions();
-                    break;
-                case 3:
-                    playerRectangles[3].Fill = new SolidColorBrush(player.getColor());
-                    player.addPoints();
-                    resetPositions();
-                    break;
-                case 4:
-                    playerRectangles[4].Fill = new SolidColorBrush(player.getColor());
-                    player.addPoints();
-                    player.playerWon();
-                    resetPositions();
+                        break;
+                    case 1:
+                        playerRectangles[1].Fill = new SolidColorBrush(player.getColor());
+                        player.addPoints();
+                        resetPositions();
+                        break;
+                    case 2:
+                        playerRectangles[2].Fill = new SolidColorBrush(player.getColor());
+                        player.addPoints();
+                        resetPositions();
+                        break;
+                    case 3:
+                        playerRectangles[3].Fill = new SolidColorBrush(player.getColor());
+                        player.addPoints();
+                        resetPositions();
+                        break;
+                    case 4:
+                        playerRectangles[4].Fill = new SolidColorBrush(player.getColor());
+                        player.addPoints();
+                        player.playerWon();
+                        resetPositions();
+                        tt.Stop();
 
-                    Congratulations w = new Congratulations(this);
-                    w.Show();
+                        Congratulations w = new Congratulations(this);
+                        w.Show();
 
-                    //addStatisticsToWebserver();
+                        if (mode == 1)
+                            addStatisticsToWebserverPvsP();
 
-                    break;
+                        break;
+                }
+            }
+
+            else
+            {
+                //Congratulations wi = new Congratulations(this);
+                //wi.Show();
+                player.addPoints();
+                resetPositions();
+                tt.Stop();
+                addStatisticsToWebserverKI();
+                this.Close();
             }
         }
 
-        private void addStatisticsToWebserver()
+        private void addStatisticsToWebserverKI()
+        {
+            string requestin = "http://127.0.0.1:3000/addkiscore";
+
+            object data = new KIData(new string[] { firstPlayer.getNickname() },
+                                    new int[] { firstPlayer.getWinStatus()}, 
+                                    ((minutes * 60) + seconds));
+
+
+            try
+            {
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(requestin);
+                httpWebRequest.ContentType = "application/json; charset=utf-8";
+                httpWebRequest.Method = "POST";
+
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    DataContractJsonSerializer ser = new DataContractJsonSerializer(data.GetType());
+                    MemoryStream ms = new MemoryStream();
+                    ser.WriteObject(ms, data);
+                    String json = Encoding.UTF8.GetString(ms.ToArray());
+
+                    streamWriter.Write(json);
+                    streamWriter.Flush();
+                }
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var responseText = streamReader.ReadToEnd();
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void addStatisticsToWebserverPvsP()
         {
             string requestin = "http://127.0.0.1:3000/addscore";
 
@@ -331,9 +391,11 @@ namespace PongGame
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
+                Console.WriteLine(ex.Message);
             }
         }
+
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -346,13 +408,13 @@ namespace PongGame
 
                         tt.Start();
                     }
-                    else
-                    {
-                        setIsPlaying(false);
-                        MessageBox.Show("Game paused.");
+                    //else
+                    //{
+                    //    setIsPlaying(false);
+                    //    //MessageBox.Show("Game paused.");
 
-                        tt.Stop();
-                    }
+                    //    tt.Stop();
+                    //}
 
                     break;
 
@@ -408,12 +470,13 @@ namespace PongGame
             if (!isPlaying)
             {
                 tt.Stop();
+
                 myGame.stopPopUpTimer();
+
                 if (pongThreadBall != null)     // otherwise exception occures if the game never started
                 {
                     pongThreadBall.Abort();
                     arduinoGetDataAndMovingSliderThread.Abort();
-
                     pongThreadPlayerOne.Abort();
                     pongThreadPlayerTwo.Abort();
                 }
@@ -421,6 +484,7 @@ namespace PongGame
                 if (winner != -1)
                 {
                     myGame.stopPopUpThreads();
+                    myGame.resetPlaygroud();
 
                     if (winner == 1)
                         addPoint(1);
@@ -440,6 +504,7 @@ namespace PongGame
                 player2.down = false;
 
                 arduinoGetDataAndMovingSliderThread = new Thread(myGame.readDataFromArduino);
+                arduinoGetDataAndMovingSliderThread.Start();
 
                 if (mode == 1)
                     pongThreadBall = new Thread(myGame.ballMove);
@@ -449,20 +514,16 @@ namespace PongGame
                 pongThreadPlayerOne = new Thread(myGame.runPlayerOneKeys);
 
                 if (mode == 1)
+                {
                     pongThreadPlayerTwo = new Thread(myGame.runPlayerTwoKeys);
+                    myGame.startPopUpTimer();
+                }
                 else if (mode == 2)
                     pongThreadPlayerTwo = new Thread(myGame.runKI);
-                //pongThreadPlayerOne = new Thread(myGame.runPlayerOne);
-                //pongThreadPlayerTwo = new Thread(myGame.runPlayerTwo);
 
-
-                myGame.resetPlaygroud();
-
-                arduinoGetDataAndMovingSliderThread.Start();
                 pongThreadPlayerOne.Start();
                 pongThreadPlayerTwo.Start();
                 pongThreadBall.Start();
-                myGame.startPopUpTimer();
             }
         }
 
@@ -491,7 +552,9 @@ namespace PongGame
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            setIsPlaying(false);            
+            setIsPlaying(false);
+            arduinoController.closePort();
+            GameControle.gameStoped();
         }
     }
 }

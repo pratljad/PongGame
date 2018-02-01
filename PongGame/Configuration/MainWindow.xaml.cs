@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using System.Diagnostics;
+using PongGame;
 
 namespace Configuration
 {
@@ -20,32 +23,54 @@ namespace Configuration
     /// </summary>
     public partial class MainWindow : Window
     {
-        public bool opened = false;
-        public bool opened2 = false;
+
+        public bool windowPlayerVsPlayerOpened = false;
+        public bool windowPlayerVsKiOpened = false;
+        private string directory = GameControle.getAbsoluteImagePath();
+
         public MainWindow()
         {
+            Console.WriteLine("PongGame started... ");
             InitializeComponent();
+            init();
             this.Background = Brushes.DarkSlateBlue;
             WordFilter.init();
         }
 
+        private void init()
+        {
+            if (!Directory.Exists(GameControle.getAbsoluteImagePath()))
+                Console.WriteLine("Folder not found! Check if Image folder is located at :'" + GameControle.getAbsoluteImagePath() + "'");
+            
+            else
+            {
+                this.Icon = GameControle.getIcon();
+                image1.Source = GameControle.getImageFigurePlayerTwo();
+                image2.Source = GameControle.getImageKI();
+                image3.Source = GameControle.getImageControllerTwo();
+                image4.Source = GameControle.getImageControllerOne();
+                image5.Source = GameControle.getImageFigurePlayerOne();
+                image6.Source = GameControle.getImageFigurePlayerOne();
+            }
+        }
+
         private void BTN_PlayervsPlayer_Click(object sender, RoutedEventArgs e)
         {
-            if (!opened && !opened2)
+            if (!windowPlayerVsPlayerOpened && !windowPlayerVsKiOpened && !GameControle.isAGameRunning())
             {
+                windowPlayerVsPlayerOpened = true;
                 SettingsPP w = new SettingsPP(this);
                 w.Show();
-                opened = true;
             }
         }
 
         private void BTN_PlayervsKI_Click(object sender, RoutedEventArgs e)
         {
-            if (!opened && !opened2)
+            if (!windowPlayerVsPlayerOpened && !windowPlayerVsKiOpened && !GameControle.isAGameRunning())
             {
+                windowPlayerVsKiOpened = true;
                 SettingsPKI w = new SettingsPKI(this);
                 w.Show();
-                opened2 = true;
             }
         }
     }

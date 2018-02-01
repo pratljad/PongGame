@@ -34,8 +34,8 @@ app.post('/addscore', function (req, res) {
             checkIfPlayerExists(usernames[1], tableNamePlayers);
             addPlayerScore(usernames[0], scores[0]);
             addPlayerScore(usernames[1], scores[1]);
-            setWinOrLossForPlayer(usernames[0], results[0]);
-            setWinOrLossForPlayer(usernames[1], results[1]);
+            setWinOrLossForPlayer(usernames[0], results[0], tableNamePlayers);
+            setWinOrLossForPlayer(usernames[1], results[1], tableNamePlayers);
             resStatus = 200;
             resMessage = "Everything went fine";
         }
@@ -56,10 +56,13 @@ app.post('/addkiscore', function (req, res) {
         if (req.body != undefined) {
             var usernames = req.body.Username;
             var times = req.body.Time;
+            var results = req.body.Results;
             checkIfPlayerExists(usernames[0], tableNameKI);
-            checkIfPlayerExists(usernames[1], tableNameKI);
+            //checkIfPlayerExists(usernames[1], tableNameKI);
             setKITime(usernames[0], times[0]);
-            setKITime(usernames[1], times[1]);
+            //setKITime(usernames[1], times[1]);
+            setWinOrLossForPlayer(usernames[0], results[0], tableNameKI);
+            //setWinOrLossForPlayer(usernames[1], results[1], tableNameKI);
             resStatus = 200;
             resMessage = "Everything went fine";
         }
@@ -151,7 +154,7 @@ var getLeaderboardRecords = function (res, category) {
                 });
                 break;
             case "kivsplayer":
-                db.collection(tableNameKI).find({}).sort({ time: -1 }).toArray(function (err, allPlayers) {
+                db.collection(tableNameKI).find({}).sort({ time: -1, wins: -1 }).toArray(function (err, allPlayers) {
                     res.status(resStatus).json(allPlayers);
                     res.end();
                 });
@@ -178,14 +181,14 @@ var checkIfPlayerExists = function (username, tableName) {
         client.close();
     });
 };
-var setWinOrLossForPlayer = function (username, result) {
+var setWinOrLossForPlayer = function (username, result,tableName) {
     mongodb.connect(url, function (err, client) {
         if (err)
             throw err;
         var db = client.db(dbName);
         switch (result) {
             case 0:
-                db.collection(tableNamePlayers).update({ username: username }, {
+                db.collection(tableName).update({ username: username }, {
                     $inc: {
                         losses: 1
                     }
@@ -193,7 +196,7 @@ var setWinOrLossForPlayer = function (username, result) {
                 client.close();
                 break;
             case 1:
-                db.collection(tableNamePlayers).update({ username: username }, {
+                db.collection(tableName).update({ username: username }, {
                     $inc: {
                         wins: 1
                     }

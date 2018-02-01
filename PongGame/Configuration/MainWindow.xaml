@@ -13,7 +13,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:local="clr-namespace:Configuration"
         mc:Ignorable="d"
-        Title="MainWindow" Height="531.648" Width="566.857">
+        Title="MainWindow" Height="531.648" Width="566.857" ResizeMode="NoResize">
     <Grid>
         <Rectangle Fill="White" Height="460" Margin="16,16,16,0" Stroke="White" VerticalAlignment="Top"/>
 
@@ -23,12 +23,11 @@
 
         <Button x:Name="BTN_PlayervsPlayer" Content="Player VS Player" HorizontalAlignment="Left" Margin="36,143,0,0" VerticalAlignment="Top" Width="483" Height="149" Click="BTN_PlayervsPlayer_Click" FontSize="25" Background="Black" FontFamily="Magneto" BorderBrush="Black"/>
         <Button x:Name="BTN_PlayervsKI" Content="Player VS Computer" HorizontalAlignment="Left" Margin="36,304,0,0" VerticalAlignment="Top" Width="483" Height="149" Background="Black" BorderBrush="Black" FontFamily="Magneto" FontSize="25" Click="BTN_PlayervsKI_Click"/>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="149" Margin="56,143,0,0" VerticalAlignment="Top" Width="112" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\goku.png"/>
-        <Image x:Name="image1" HorizontalAlignment="Left" Height="149" Margin="424,143,0,0" VerticalAlignment="Top" Width="62" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\chara.png"/>
-        <Image x:Name="image2" HorizontalAlignment="Left" Height="100" Margin="373,699,0,-315.8" VerticalAlignment="Top" Width="100"/>
-        <Image x:Name="image_Copy" HorizontalAlignment="Left" Height="149" Margin="36,304,0,0" VerticalAlignment="Top" Width="112" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\goku.png"/>
-        <Image x:Name="image3" HorizontalAlignment="Left" Height="117" Margin="424,336,0,0" VerticalAlignment="Top" Width="95" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\ki.png"/>
-        <Image x:Name="image4" HorizontalAlignment="Left" Height="77" Margin="76,40,0,0" VerticalAlignment="Top" Width="77" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\Controller2.png" RenderTransformOrigin="0.5,0.5">
+        <Image x:Name="image6" HorizontalAlignment="Left" Height="149" Margin="56,143,0,0" VerticalAlignment="Top" Width="112" Source="Images/Goku.png"/>
+        <Image x:Name="image1" HorizontalAlignment="Left" Height="149" Margin="424,143,0,0" VerticalAlignment="Top" Width="62" Source="Images/Chara.png"/>
+        <Image x:Name="image5" HorizontalAlignment="Left" Height="149" Margin="36,304,0,0" VerticalAlignment="Top" Width="112" Source="Images/Goku.png"/>
+        <Image x:Name="image2" HorizontalAlignment="Left" Height="117" Margin="424,336,0,0" VerticalAlignment="Top" Width="95" Source="Images/Ki.png"/>
+        <Image x:Name="image3" HorizontalAlignment="Left" Height="77" Margin="76,40,0,0" VerticalAlignment="Top" Width="77" Source="Images/Controller2.png" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -38,6 +37,6 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <Image x:Name="image5" HorizontalAlignment="Left" Height="70" Margin="410,45,0,0" VerticalAlignment="Top" Width="63" Source="C:\HTL\5.Schuljahr\SYP PRE\PongGame\PongGame\Images\Joystick.png"/>
+        <Image x:Name="image4" HorizontalAlignment="Left" Height="70" Margin="410,45,0,0" VerticalAlignment="Top" Width="63" Source="Images/Joystick.png"/>
     </Grid>
 </Window>

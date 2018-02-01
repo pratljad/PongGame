@@ -10,8 +10,8 @@ namespace Configuration
     public static class WordFilter
     {
         public static List<string> filter = new List<string>();
-        private static string path = @"../../../wordFilter.txt";    // relativen Pfad ändern, bei Bildern auch
-        
+        private static string path = "../../../wordFilter.txt";
+
         public static void init()
         {
             string line;
